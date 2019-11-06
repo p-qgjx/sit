@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>作者列表</title>
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/author.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/elementUi.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/elementUi.js"></script>
+	<style type="text/css">
+		.content{
+			min-height: 60rem;
+		}
+		.authorInfo span{
+			margin-bottom: .6rem
+		}
+		.over{
+			color: #666666;
+			width: 25rem;
+			overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+	<div id="index" v-cloak>
+		<div class="head">
+			<img src="../../static/img/logo.png">
+			<div >
+				<img src="../../static/img/search.png" class="search" @click="goSearch">
+			</div>
+		</div>
+		<ul class="nav">
+			<li><a href="/newsListPhone?id=1">热点</a></li>
+			<li><a href="/newsListPhone?id=2">新政</a></li>
+			<li><a class="current" href="javascript:;">百家</a></li>
+			<li><a href="/newsListPhone?id=3">课堂</a></li>
+			<li><a href="/activityPhone">活动</a></li>
+			<li><a href="/surplusticketlist">盈票</a></li>
+		</ul>
+		<div class="content">
+			<ul>
+				<li v-for="(item,index) in list" @click="detail(item)">
+					<div class="authorImg"><img :src="item.headpicture"></div>
+					<div class="authorInfo">
+						<span style="font-weight: 800">{{item.name}}</span>
+						<span>{{item.identity}}</span>
+						<p class="over">{{item.introduce}}</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="paging" v-if="total > 10">
+			<el-pagination
+				@current-change="swichPage"
+			 	background
+			  	layout="prev, pager, next"
+			  	:total="total">
+			</el-pagination>
+		</div>
+		<div class="footer">
+			<div>© 2018，盈科票据版权所有 /粤ICP备19049968号-1</div>
+			<div>热线电话：400-0192-188</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#index',
+		data: {
+			list: [],
+			pageNum: 1,
+			pageSize: 10,
+			total: 1,
+		},
+		mounted() {
+			this.getList(this.pageSize,this.pageNum)
+		},
+		methods:{
+			getList(pageSize,pageNum){
+				let data = {
+					pageSize,
+					pageNum
+				}
+				postPromise(data,'author/pagingSel').then(res => {
+					if(res.flag == 0) {
+						this.total = res.number
+						this.list = res.map.pageList
+					}
+				})
+			},
+			swichPage(e) {
+				this.getList(this.pageSize,e)
+				
+			},
+
+			detail(item) {
+				window.location.href = '/authorDetails?id='+item.id
+			},
+			goSearch() {
+				window.location.href = '/search';
+			}
+		}
+	})
+</script>
+</html>

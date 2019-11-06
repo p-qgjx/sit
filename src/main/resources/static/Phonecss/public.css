@@ -1,0 +1,89 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+html{
+	font-size: 2.2rem ;
+}
+ul li{
+	list-style: none;
+}
+a{
+	color: #333;
+	text-decoration: none;
+}
+.head{
+	padding: 0 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 5rem;
+}
+.head > img{
+	width: 9rem;
+	height: 2.5rem;
+}
+.search{
+	width: 3rem;
+	height: 3rem;
+}
+.current{
+	color: #f42222
+}
+.nav{
+	display: flex;
+	justify-content: space-between;
+	padding: 0 1rem;
+	align-items: center;
+	height: 5rem;
+	font-size: 1.8rem;
+	background-color:#f0f0f0;
+}
+
+.footer{
+	height: 3rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem 0;
+	font-size: 1.4rem;
+	background-color:#333333;
+	color: #fff
+}
+.content{
+	padding: 0 1rem;
+	min-height: 53rem
+}
+ [v-cloak]{
+    display: none
+ }
+ .paging{
+ 	display: flex;
+ 	align-items: center;
+ 	justify-content: center;
+ 	height: 4rem;
+ }
+.el-pager > .number{
+ 	width: 2rem !important;
+ 	height: 2rem !important;
+ 	line-height: 2rem !important
+ }
+ .btn-prev,.btn-next,.more{
+ 	width: 2rem !important;
+ 	height: 2rem !important;
+ 	line-height: 2rem !important
+ }
+.overH{
+	width: 15rem;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+
+.el-icon-document,.el-icon-tickets{
+	color: #9fcad7;
+	margin-right: .5rem;
+	font-size: 1.8rem
+}
+

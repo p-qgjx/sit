@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>文章详情</title>
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/article.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/elementUi.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/swiper.min.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/elementUi.js"></script>
+	 <script src="../../static/js/swiper.min.js"></script>
+	 <style type="text/css">
+		 #index{
+			 position: relative;
+		 }
+		.zhiyin{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background: rgba(0,0,0,.5);
+
+		}
+    	.zhiyin >img{
+			width: 100%;
+		}
+		.zhengwen{
+			min-height: 43rem
+		}
+		.zhengwen > p>img{
+			width: 100%
+		}
+	 </style>
+</head>
+<body>
+	<div id="index" ref="fontz">
+		<div class="head">
+			<img src="../../static/img/logo.png">
+			<div >
+				<img src="../../static/img/search.png" class="search" @click="goSearch">
+			</div>
+		</div>
+		<ul class="nav">
+			<li><a :class="newsType == 1? 'current' : ''" href="/newsListPhone?id=1" >热点</a></li>
+			<li><a :class="newsType == 2? 'current' : ''" href="/newsListPhone?id=1">新政</a></li>
+			<li><a  href="/authorListPhone">百家</a></li>
+			<li><a :class="newsType == 3? 'current' : ''" href="/newsListPhone?id=1" >课堂</a></li>
+			<li><a href="/activityPhone">活动</a></li>
+			<li><a href="/surplusticketlist">盈票</a></li>
+		</ul>
+		<div class="details">
+			<div class="title">{{newInfo.title}}</div>
+			<div class="fun">
+				<div>
+					<div class="time" style="color: #b0b0b0;font-size: 1.8rem">
+						{{newInfo.creattime}} 
+						<span style="margin-left: .8rem">作者:{{newInfo.writer.name}}</span>
+					</div>
+					<!-- <div class="name">作者:{{newInfo.writer.name}}</div> -->
+				</div>
+				<div class="setting">
+					<div class="fontW1" :class="currentFont == 1? 'acitve' : ''" @click="swichFont(1)">A</div>
+					<div class="fontW2" :class="currentFont == 2? 'acitve' : ''" @click="swichFont(2)">A</div>
+				</div>
+			</div>
+			<div class="zhengwen" v-html="newInfo.content"></div>
+			<div class="fenxiang">
+				<img src="../../static/img/QQ.png" @click="fenxiang">
+				<img src="../../static/img/wx.png" @click="fenxiang">
+				<img src="../../static/img/wb.png" @click="fenxiang">
+			</div>
+			<div class="tab" v-if="keyword != ''">
+				<div v-for="(item,index) in keyword" @click="search(item)">{{item}}</div>
+				 
+			</div>
+			<div clas="lists">
+				<div class="xiangguan"><i class="el-icon-document"></i>相关新闻</div>
+				<ul>
+					<li class="item" v-for="(item,index) in list" @click="newCurrent(item)">
+						<div>
+							<div class="itemTitle">
+								<span class="">{{item.title}}</span>
+								<span class="itemTime">{{item.creattime}}</span>
+							</div>
+							<div class="itemImg">
+								<img :src="item.toppicture" alt="">
+							</div>
+						</div>
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="footer">
+			<div>© 2018，盈科票据版权所有 /粤ICP备19049968号-1</div>
+			<div>热线电话：400-0192-188</div>
+		</div>
+		<div class="zhiyin" v-if="showFx" @click="hideFx">
+			<img src="../../static/img/fx.png" alt="" @click="hideFx">
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#index',
+		data: {
+			currentFont: '1',
+			newsType:'',
+			newInfo: {writer:{}},
+			writer: '',
+			keyword: [],
+			list: [],
+			showFx:false
+		},
+		mounted() {
+			this.newsType = this.getQueryStringRegExp('currentId')
+			this.getInfo(this.getQueryStringRegExp('id'))
+		},
+		methods:{
+			fenxiang() {
+				this.showFx = true;
+				document.documentElement.scrollTop = 0
+				document.body.scrollTop = 0
+			},
+			hideFx() {
+				this.showFx = false
+			},
+			getQueryStringRegExp(name){
+                let reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+                if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
+            },
+           
+			swichFont(e){
+				if(e == 1) {
+					this.currentFont = e
+					this.$refs.fontz.style.fontSize = '2rem'
+					
+				}else {
+					this.currentFont = e
+					this.$refs.fontz.style.fontSize = '1.6rem'
+					
+				}
+			},
+			getInfo(id) {
+				let data ={
+					id,
+				}
+				postPromise(data,'news/details').then(res => {
+					if(res.flag == 0) {
+						res.map.news.creattime = res.map.news.creattime.substring(0,res.map.news.creattime.length-3);
+						this.newInfo = res.map.news;
+						this.writer = res.map.writer;
+						this.keyword = res.map.news.keyword.split('，')
+						this.list = res.map.resemble
+					}
+				})
+			},
+			newCurrent(item) {
+				window.scrollTo({ 
+				    top: 0, 
+				});
+				this.getInfo(item.newsid)
+			},
+
+			goSearch() {
+				window.location.href = '/search'
+			},
+			search(item) {
+				window.location.href = '/result?keyWord='+ item;
+			},
+
+		}
+	})
+</script>
+</html>

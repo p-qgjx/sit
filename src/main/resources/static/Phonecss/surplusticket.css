@@ -1,0 +1,100 @@
+.content{
+	padding: 0 1rem;
+}
+.style{
+	/*border: 1px solid #88a3a7;*/
+	margin-top: 1rem;
+	margin-bottom: 3rem
+}
+.style > img{
+	width: 100%;
+}
+.style > div{
+
+	font-size: 1.4rem
+}
+.icon{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1.5rem
+}
+.icon > img{
+	width: 7em;
+	height: 5rem
+}
+.title{
+	display: flex;
+	justify-content: center;
+	font-size: 1.8rem
+}
+.lsitContent{
+	margin-top: 3rem;
+	margin-bottom: 1rem;
+	font-size: 1.4rem;
+	display: flex;
+	justify-content: center;
+	line-height: 2rem;
+	text-align: justify;
+}
+.look{
+	display: flex;
+	justify-content: center;
+}
+.look > div{
+	height: 2.5rem;
+	width: 8rem;
+	background: #00afef;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 30px
+}
+.bannerTu{
+	width: 100%;
+	height: 10rem;
+	margin-bottom: 1rem;
+}
+.bannerTu > img{
+	height: 100%;
+	width: 100%
+}
+.detailC{
+	padding: 0 1rem
+}
+.detailC strong{
+	width: 80%;
+	padding: 1rem 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 2rem;
+	border-top: 1px solid ;
+	border-bottom: 1px solid ;
+	font-size: 1.6rem;
+}
+.cent{
+	display: flex;
+	justify-content: center;
+}
+.zhangwen{
+	margin-top: 1rem;
+	padding: 0 1rem;
+	font-size: 1.4rem;
+	min-height: 32rem
+}
+.my{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.8rem;
+	height: 3rem
+}
+.my>.line{
+	width: 5rem;
+	height: 2px;
+	background: #eee
+}
+.my >span{
+	margin: 0 1rem
+}

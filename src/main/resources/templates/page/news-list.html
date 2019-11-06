@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>文章列表</title>
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/article.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/elementUi.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/swiper.min.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/elementUi.js"></script>
+	 <script src="../../static/js/swiper.min.js"></script>
+	 <style type="text/css">
+		
+    
+	 </style>
+</head>
+<body >
+	<div id="index">
+		<div class="head">
+			<img src="../../static/img/logo.png">
+			<div >
+				<img src="../../static/img/search.png" class="search" @click="goSearch">
+			</div>
+		</div>
+		<ul class="nav">
+			<li><a :class="newsType == 1? 'current' : ''" href="javascript:;" @click="currentNew(1)">热点</a></li>
+			<li><a :class="newsType == 2? 'current' : ''" href="javascript:;" @click="currentNew(2)">新政</a></li>
+			<li><a  href="/authorListPhone">百家</a></li>
+			<li><a :class="newsType == 3? 'current' : ''" href="javascript:;" @click="currentNew(3)">课堂</a></li>
+			<li><a href="/activityPhone">活动</a></li>
+			<li><a href="/surplusticketlist">盈票</a></li>
+		</ul>
+		<div v-if="list == ''" class="noDate">暂无数据</div>
+		<div class="block" v-if="list != ''">
+		    <el-carousel height="21rem" :interval="3000" >
+		      	<el-carousel-item v-for="(item,index) in list.slice(0,3)" :key="index">
+			       <div class="news">
+						<img :src="item.toppicture" @click="detail(item)">
+					</div>
+					 <div class="cont">
+				    	<div class="ti">{{item.title}}</div>
+				    	<div style="color: #c3c3c3">{{item.creattime}}</div>
+		    		</div>
+		      </el-carousel-item>
+		    </el-carousel>
+
+		</div>
+		<ul class="articleList" v-if="list != ''">
+			<li v-for="(item,index) in list.slice(3)" @click="detail(item)">
+				<div>
+					<div class="newTs">
+						<div class="creatTitle">{{item.title}}</div>
+						<div class="creattime">{{item.creattime}}</div>
+					</div>
+					<img :src="item.toppicture">
+				</div>
+			</li>
+		</ul>
+		<div class="paging" v-if="total > 5">
+			<el-pagination
+				@current-change="swichPage"
+			 	background
+			  	layout="prev, pager, next"
+			  	:total="total">
+			</el-pagination>
+		</div>
+		<div class="footer">
+			<div>© 2018，盈科票据版权所有 /粤ICP备19049968号-1</div>
+			<div>热线电话：400-0192-188</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#index',
+		data: {
+			list: [],
+			pageNum: 1,
+			pageSize: 10,
+			total: 1,
+			newsType: 1,
+		},
+		mounted() {
+			if(this.getQueryStringRegExp('id') == '' ) {
+				this.getList(this.pageSize,this.pageNum,this.newsType)
+			}else {
+				this.newsType = this.getQueryStringRegExp('id')
+				this.getList(this.pageSize,this.pageNum,this.getQueryStringRegExp('id'))
+			}
+			
+			let swiper = new Swiper('.swiper-container', {
+			    pagination: {
+			        el: '.swiper-pagination',
+			    },
+			    loop : true,
+			    autoplay:true,
+		    });
+		},
+		methods:{
+			getQueryStringRegExp(name){
+                let reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+                if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
+            },
+            getList(pageSize,pageNum,newsType){
+				let data = {
+					pageSize,
+					pageNum,
+					newsType
+				}
+				postPromise(data,'news/byType').then(res => {
+					if(res.flag == 0) {
+						this.total = res.number
+						this.list = res.map.pageList;
+					}
+				})
+			},
+			swichPage(e) {
+				this.getList(this.pageSize,e,this.newsType)
+			},
+
+			currentNew(e){
+				this.newsType = e
+				this.getList(this.pageSize,1,e)
+			},
+			detail(item){
+				window.location.href = '/articleDetails?id='+ item.newsid +"&"+'currentId=' + this.newsType
+			},
+			goSearch() {
+				window.location.href = '/search';
+			}
+
+		}
+	})
+</script>
+</html>

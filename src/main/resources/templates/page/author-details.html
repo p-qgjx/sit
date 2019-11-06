@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>作者详情</title>
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/author.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/elementUi.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/elementUi.js"></script>
+</head>
+<body>
+	<div id="index" v-cloak>
+		<div class=author_Info>
+			<div class="userImg">
+				<div>
+					<img :src="info.headpicture">
+				</div>
+			</div>
+			<div class="userName">{{info.name}}</div>
+			<div class="shnefen">{{info.identity}}</div>
+		</div>
+		<!-- <div class="jianjie">
+			<div>作者简介:</div>
+			<p>{{info.introduce}}</p>
+		</div> -->
+		<div class="xaingqing">
+			<div><i class="el-icon-tickets"></i>简介</div>
+			<p v-html="info.introduce" style="text-indent: 2em"></p>
+		</div>
+		<div class="xiangg">
+			<div>
+				<i class="el-icon-document"></i>
+				相关新闻
+			</div>
+		</div>
+		<ul class="author_InfoList" v-if="list != ''">
+			<li v-for="(item,index) in list" @click="detail(item)">
+				<div>
+					<div class="title">
+						<span>{{item.title}}</span>
+						<span style="color: #666">{{item.creattime}}</span>
+					</div>
+					<div class="fenmain">
+						<img :src="item.toppicture">
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div v-if="list == ''" style="text-align: center;min-height: 40rem;margin-top: 2rem">
+			暂无相关新闻
+		</div>
+		<div class="paging" v-if="total > 10">
+			<el-pagination
+				@current-change="swichPage"
+			 	background
+			  	layout="prev, pager, next"
+			  	:total="total">
+			</el-pagination>
+		</div>
+		<div class="footer">
+			<div>© 2018，盈科票据版权所有 /粤ICP备19049968号-1</div>
+			<div>热线电话：400-0192-188</div>
+		</div>
+	</div>	
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#index',
+		data: {
+			info:{},
+			list: [],
+			pageNum: 1,
+			pageSize: 10,
+			total: 1,
+		},
+		mounted() {
+			this.getIngo(this.getQueryStringRegExp('id'),this.pageNum,this.pageSize)
+		},
+		methods:{
+			getQueryStringRegExp(name){
+                let reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+                if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
+            },
+            getIngo(id,pageNum,pageSize) {
+            	let data = {
+            		id,
+            		pageNum,
+            		pageSize
+            	}
+            	postPromise(data,'author/selById').then(res => {
+					if(res.flag == 0) {
+						console.log(res)
+						this.info = res.map.author
+						this.total = res.number
+						res.map.pageList.map((item) => {
+							item.creattime = item.creattime.slice(0,10)
+						})
+						this.list = res.map.pageList
+					}
+				})
+            },
+            swichPage(e) {
+				this.getIngo(this.getQueryStringRegExp('id'),e,this.pageSize);
+			},
+			detail(item){
+				window.location.href = '/articleDetails?id='+ item.newsid 
+			},
+
+		}
+	})
+</script>
+</html>

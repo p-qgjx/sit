@@ -1,0 +1,145 @@
+.content > ul > li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1rem;
+	font-size: 1.6rem;
+	padding-bottom: 1rem;
+    border-bottom: 1px solid #999;
+}
+.authorImg{
+	height: 6rem;
+	width: 6rem;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-right: 1rem
+}
+.authorImg > img{
+	width: 100%;
+	height: 100%
+}
+.authorInfo{
+	display: flex;
+	flex-direction: column;
+	flex:1;
+	margin-left: .8rem
+}
+
+.author_Info {
+	width: 100%;
+	height: 15rem;
+	background: url(../img/bj.jpg) no-repeat;
+	background-size: 100% 100%;
+	margin-bottom: 1rem
+}
+.userImg{
+	display: flex;
+	justify-content: center;
+	padding-top: 2rem
+}
+.userImg >  div{
+	width: 6rem;
+	height: 6rem;
+	background: #fff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.userImg img{
+	width: 5rem;
+	height: 5rem;
+	border-radius: 50%
+}
+.userName{
+	display: flex;
+	justify-content: center;
+	font-size: 1.6rem;
+	margin-top: 1rem;
+	color: #fff
+}
+.shnefen{
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+	font-size: 1.6rem;
+	color: #fff
+}
+.jianjie{
+	display: flex;
+	padding: 1rem;
+	font-size: 1.6rem;
+	background: #f1f1f1;
+	margin-bottom: 1.5rem
+}
+.jianjie p{
+	display: flex;
+	flex: 1;
+	margin-left: 1rem
+}
+.xaingqing{
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem;
+}
+.xaingqing > div{
+	font-size: 1.6rem;
+	
+	border-bottom: 1px solid #ccc;
+	padding-bottom: .7rem
+}
+.xaingqing > p{
+	font-size: 1.6rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem
+}
+.author_InfoList > li{
+	padding:0 1rem;
+	display: flex;
+	margin-top: 2rem;
+	justify-content: space-between;
+}
+.author_InfoList > li >div{
+	display: flex;
+	width: 100%;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 1rem
+}
+.fenmain {
+	width: 8rem;
+   
+}
+.fenmain > img{
+	width: 8rem;
+	border-radius: 5px;
+}
+.author_InfoList{
+	margin-bottom: 3rem;
+	min-height: 40rem;
+}
+.author_InfoList .title{
+	display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 1rem;
+    flex: 1
+}
+.author_InfoList .title >span:nth-child(1){
+	font-size: 1.8rem;
+	
+}
+.author_InfoList .title >span:nth-child(2){
+	font-size: 1.4rem
+}
+.xiangg{
+	padding: 0 1rem;
+}
+.xiangg >div{
+	display: flex;
+	font-size: 1.6rem;
+	border-bottom: 1px solid #ccc;
+	height: 2rem;
+	align-items: center;
+	padding-bottom: .6rem;
+	margin-top: 2rem
+}

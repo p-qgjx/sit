@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>活动列表</title>
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/activity.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/elementUi.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/elementUi.js"></script>
+</head>
+<body>
+	<div id="index" v-cloak>
+		<div class="head">
+			<img src="../../static/img/logo.png">
+			<div >
+				<img src="../../static/img/search.png" class="search" @click="goSearch">
+			</div>
+		</div>
+		<ul class="nav">
+			<li><a href="/newsListPhone?id=1">热点</a></li>
+			<li><a href="/newsListPhone?id=2">新政</a></li>
+			<li><a href="/authorListPhone">百家</a></li>
+			<li><a href="/newsListPhone?id=3">课堂</a></li>
+			<li><a class="current" href="javascript:;">活动</a></li>
+			<li><a href="/surplusticketlist">盈票</a></li>
+		</ul>
+		<div class="content">
+			<div v-for="(item,index) in list" @click="detail(item)">
+				<div class="coverMap">
+					<img :src="item.activitypictures == '' ? '../../static/img/timg(1).jpg' : item.activitypictures">
+				</div>
+				<div class="info">
+					<div>
+						<div class="state">{{item.remarks}}</div>
+						<div class="title">{{item.name}}</div>
+					</div>
+					<div class="address">
+						<div>
+							<img src="../../static/img/timg.jpg">
+							<div style="display: flex;flex:1;align-items: center;">
+								<!-- <span>地址：</span> -->
+								<span class="dizhi">{{item.activityaddress}}</span>
+							</div>
+						</div>
+						<div class="shijian">
+							{{item.activitytime}}~{{item.endtime}}
+						</div>
+					</div>
+					<!-- <div class="time">开始时间：</div>
+					<div>结束时间：</div> -->
+				</div>
+			</div>
+		</div>
+		<div class="paging" v-if="total > 5">
+			<el-pagination
+				@current-change="swichPage"
+			 	background
+			  	layout="prev, pager, next"
+			  	:total="total">
+			</el-pagination>
+		</div>
+		
+		<div class="footer">
+			<div>© 2018，盈科票据版权所有 /粤ICP备19049968号-1</div>
+			<div>热线电话：400-0192-188</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#index',
+		data: {
+			list: [],
+			pageNum: 1,
+			pageSize: 10,
+			total: 1,
+		},
+		mounted() {
+			this.getList(this.pageSize,this.pageNum)
+		},
+		methods:{
+			getList(pageSize,pageNum){
+				let data = {
+					pageSize,
+					pageNum
+				}
+				postPromise(data,'activity/getActivity').then(res => {
+					if(res.flag == 0) {
+						this.total = res.number//activitytime
+						
+						res.map.pageList.map((item) => {
+							item.activitytime = item.activitytime.slice(0,10).substring(5,10).replace(/-/,'月')+'日'
+							item.endtime = item.endtime.slice(0,10).substring(5,10).replace(/-/,'月')+'日	'
+							
+						})
+						this.list = res.map.pageList
+					}
+				})
+			},
+			swichPage(e) {
+				this.getList(this.pageSize,e)
+			},
+
+			detail(item) {
+				window.location.href = '/activityDetails?id='+ item.id
+			},
+			goSearch() {
+				window.location.href = '/search';
+			}
+		}
+	})
+</script>
+</html>

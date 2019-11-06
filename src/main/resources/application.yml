@@ -1,0 +1,40 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://47.96.106.248:3306/qgjx?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: Abc123!@#
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    cache: false    #关闭页面缓存
+  servlet:
+    multipart:
+      max-file-size: 10MB   #单个文件大小
+  mvc:
+    static-path-pattern: /static/**
+    date-format: yyyy-MM-dd HH:mm:ss   #传入时间解析
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss   #输出时间解析
+    locale: zh
+    time-zone: GMT+8
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.nkp.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+pagehelper:    #分页
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+Oos:   #阿里云OSS图片服务器配置
+  accessKeyId: LTAI4FmDw9ZWykKz6brSuuoj
+  accessKeySecret: uhbpTwa7dkvKYe4jVSgQ7nc5VYdK9o
+  bucketName: xy-hzj
+  endpoint: oss-cn-shanghai.aliyuncs.com
+

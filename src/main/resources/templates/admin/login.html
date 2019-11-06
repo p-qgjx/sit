@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>后台登录</title>
+    <link rel="stylesheet" href="../../static/ui/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/templatemo-style.css">
+     <link rel="stylesheet" href="../../static/css/elementUi.css">
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/vue.min.js"></script>
+    <script src="../../static/js/request.js"></script>
+    <script src="../../static/js/elementUi.js"></script>
+    <script src="../../static/ui/jquery-ui.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+   <script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
+  </head>
+  <style>
+    html，body,#login{
+      overflow: hidden;
+     
+    }
+    .row{
+       background: #567086 !important
+    }
+    html,body,#login,.row{
+      height: 100%;
+    }
+    .row{
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+    }
+    .dx_captcha_basic_bar {
+      width: 370px !important
+    }
+  </style>
+  <body>
+    <div class="" id="login">
+        <div style="padding-left: 50px;display: flex;align-items: center;padding-top: 20px;background: #567086">
+          <img src="../../static/img/tupian1.png">
+          <span style="font-size: 22px;color: #fff;margin-left: 20px;font-weight: 700">盈票服务号管理</span>
+        </div>
+      <div class="row">
+        <div class="col-12 mx-auto tm-login-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+              <div class="col-12 text-center">
+                <h2 class="tm-block-title mb-4">欢迎登陆盈票服务号管理后台</h2>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12">
+                <div class="tm-login-form">
+                  <div class="form-group">
+                    <!-- <label for="username">用户名</label> -->
+                    <input
+                      v-model="userName"
+                      placeholder="请输入手机号码"
+                      type="text"
+                      class="form-controls"
+                      required
+                    />
+                  </div>
+                  <div class="form-group mt-3" style="position: relative;">
+                    <!-- <label for="password">密码</label> -->
+                    <input
+                      v-model="userPW"
+                       placeholder="请输入验证码"
+                      type="text"
+                      class="form-controls"
+                      required
+                    />
+                    <button  
+                       v-if="isTime"
+                      @click="setCode"
+                      class="btn btn-primary " 
+                      style="position: absolute;top:0;right: 0;height:100%;background: #169bd5;color: #fff;border: none;outline: none;">发送验证码
+                    </button>
+                     <button  
+
+                      v-else
+                      class="btn btn-primary " 
+                      style="position: absolute;top:0;right: 0;height:100%;background: #169bd5;color:#fff;border: none;outline: none">{{time}}秒后重新获取
+                    </button>
+                  </div>
+                  <div id="c1" style="width: 100%"></div>
+                  <div class="form-group mt-4">
+                    <button
+                    style="background: #169bd5;color: #fff;border: none;outline: none"
+                      class="btn btn-primary btn-block text-uppercase"
+                      @click="signIn"
+                    >
+                      登录
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+
+  let login = new Vue({
+    el: '#login',
+    data: {
+        userName: '',
+        userPW: '',
+        ifShow: false,
+        token: '',
+        time: '60',
+        isTime: true,
+    },
+    mounted() {
+      this.getHuaKuai()
+    },
+    methods: {
+      signIn() {
+       if(this.token == '') {
+           this.$message({
+            message: '请先验证，在进行登录',
+            type: 'warning'
+          });
+       }else {
+        let data = {
+          phone: this.userName,
+          code: this.userPW
+        }
+        postPromise(data,'user/check').then(res => {
+         if(res.flag == 0) {
+          localStorage.setItem("userInfo", JSON.stringify(res.map.session_user));
+          location.replace('/newsList')
+          //window.location.href='/index';
+         }else {
+          this.$message({
+            message: '输入正确的验证码',
+            type: 'warning'
+          });
+         }
+        } ,rej => {
+          alert(rej.msg)
+        })
+       }
+      },
+
+      getHuaKuai() {
+        var myCaptcha = _dx.Captcha(document.getElementById('c1'), {
+            style: 'inline',
+            width: '370px',
+            appId: '774c3a1f9e8f735c6245a1c43b6d455f', //appId，在控制台中“应用管理”或“应用配置”模块获取
+            success:  (token)=> {
+              //请求发送短信
+              this.token = token
+
+            }
+        })
+      },
+
+      setCode() { //发送验证码
+        if(this.userName == '') {
+          this.$message({
+            message: '手机号码不能为空',
+            type: 'warning'
+          });
+        }else if(!(/^1[3456789]\d{9}$/.test(this.userName))){
+           this.$message({
+            message: '请输入正确手机号码',
+            type: 'warning'
+          });
+        }else {
+          postPromise({phone: this.userName},'user/getcode').then(res => {
+            if(res.flag == 0) {
+               let time =setInterval(() => { 
+                  this.time-- 
+                  this.isTime = false
+                  if(this.time <= 0) {
+                    this.isTime = true
+                    this.time = '60'
+                    clearInterval(time)
+                  }
+                },1000);
+      
+            }
+          }, err => {
+            console.log(err)
+          })
+        }
+      }
+    }
+  })
+</script>

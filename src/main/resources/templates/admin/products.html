@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>文章列表</title> 
+    <link rel="stylesheet" href="../../static/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+   
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="../../static/css/templatemo-style.css">
+     <link rel="stylesheet" href="../../static/css/elementUi.css">
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/vue.min.js"></script>
+    <script src="../../static/js/request.js"></script>
+    <script src="../../static/js/elementUi.js"></script>
+    <style>
+        
+        .tm-block{
+            padding: 0;  
+        }
+        .tm-block-title{
+            margin-bottom: 0;
+            padding: 15px;
+        }
+        .table tbody tr{
+            cursor: pointer;
+        }
+        [v-cloak]{
+            display:none
+        }
+        .overName{
+            width: 120px !important;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+    </style>
+  </head>
+  <body id="reportsPage">
+    <div id="home" v-cloak>
+        <nav class="navbar navbar-expand-xl">
+            <div class="container h-100">
+                <img src="../../static/img/tupian1.png">
+                <a class="navbar-brand" href="javascript:;">
+                    <h1 class="tm-site-title mb-0">盈票服务号管理</h1>
+                </a>
+                <button
+                        class="navbar-toggler ml-auto mr-0"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars tm-nav-icon"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto h-100">
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="javascript:;"
+                            >
+                               <img class="titleIcon" src="../../static/img/wenzhang.png">
+                              <span>文章</span>
+                            </a>
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="/authorList"
+                                
+                            >
+                               <img class="titleIcon" src="../../static/img/zuozhe.png">
+                              <span>作者</span>
+                            </a>
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="/activityList"
+                               
+                            >
+                               <img class="titleIcon" src="../../static/img/huodong.png">
+                              <span>活动</span>
+                            </a>
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="/productList"
+                                
+                            >
+                               <img class="titleIcon" src="../../static/img/chanpin.png">
+                              <span>产品</span>
+                            </a>
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="/userList"
+                               
+                            >
+                               <img class="titleIcon" src="../../static/img/xitong.png">
+                              <span>系统</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="/signout" @click="loginOut">
+
+                                <img
+                                    style="width: 50px;height: 50px;border-radius: 50%"
+                                    :src="currentUser.purl"
+                                    alt="">
+                                <span>{{currentUser.username}}</span>
+                                <span class="out">退出</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="listFun">
+                <div>
+                     <input 
+                        v-model="condition"
+                        type="" 
+                        placeholder="请输入标题关键词" 
+                        class="searchInpt">
+                    <div>
+                       <!--  <el-date-picker
+                            style="border-radius: none;border-color: #444"
+                          v-model="datetime"
+                          value-format="yyyy-M-MM"
+                          type="date"
+                          placeholder="选择日期">
+                        </el-date-picker> -->
+
+                        <el-date-picker
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                          
+                            v-model="datetime"
+                            type="datetime"
+                            placeholder="请选择选择日期时间">
+                        </el-date-picker>
+                    </div>
+                    <button class="btns" @click="search">搜索</button>
+                </div>
+               <div class="addAlls" @click="addNews">新增文章</div>
+            </div>
+            <div class="subFun">
+                <span>文章类型：</span>
+                <div class="typeList">
+                    <div 
+                        :class="currentType == '1' ? 'currentType' : ''"  
+                        @click="selectType(1)">热点
+                    </div>
+                    <div 
+                        :class="currentType == '2' ? 'currentType' : ''"  
+                        @click="selectType(2)">新政
+                    </div>
+                    <div 
+                        :class="currentType == '3' ? 'currentType' : ''"  
+                        @click="selectType(3)">课堂
+                    </div>
+                </div>
+            </div>
+            <div class="boxTable">
+                <div class="tables">
+                    <ul class="tableT">
+                        <li style="width: 5%"></li>
+                        <li style="width: 5%">序号</li>
+                        <li style="width: 36%">文章标题</li>
+                        <li style="width: 10%">作者</li>
+                        <li style="width: 8%">封面图片</li>
+                        <li style="width: 16%">发布时间</li>
+                        <li style="width: 10%">状态</li>
+                        <li style="width: 12%">操作</li>
+                    </ul>
+                    <div class="parentTale" v-if="newList != ''">
+                        <ul class="tableC" v-for="(item,index) in newList">
+                            <li style="width: 5%">
+                                <input type="checkbox" name="" @change="changeBox(item,index)">
+                            </li>
+                            <li style="width: 5%">{{index + 1}}</li>
+                            <li style="width: 36%">{{item.title}}</li>
+                            <li style="width: 10%">{{item.writer.name}}</li>
+                            <li style="width: 8%">
+                                {{item.toppicture == '' ? '无' : '是'}}
+                             </li>
+                            <li style="width: 16%">{{item.creattime}}</li>
+                            <li style="width: 10%">
+                                <span class="xianshi" @click="isShow(item)">
+                                    {{item.remarks == 0 ?'显示' : '隐藏'}}
+                                </span>
+                            </li>
+                            <li style="width: 12%" class="lastLi">
+                                <span v-if="index == 0"></span> 
+                                <span v-else-if="index == 1"></span> 
+                                <span v-else-if="index == 2"></span> 
+                                <span v-else @click="top(item)">顶置</span>
+                                <span @click="details(item)">编辑</span> 
+                                <span @click="delArticle('1',item)">删除</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-else class="zanwu">
+                        暂无数据
+                    </div>
+                </div>
+                <div>
+                    <div class="delBtn" @click="allDel">批量删除</div>
+                </div>
+                <div style="display: flex;justify-content: center;margin-top: 20px">
+                    <el-pagination
+                        v-if="newList != '' "
+                        @current-change="currenPage"
+                        background
+                        layout="prev, pager, next"
+                        :total="total">
+                    </el-pagination>
+                </div>
+            </div>
+        </div>
+        <div class="h70">
+            <iframe class="iframeBox" src="/footer"></iframe>
+        </div>
+    </div>
+    <script>
+
+let home = new Vue({
+    el: '#home',
+    data: {
+        currentUser: JSON.parse(localStorage.getItem('userInfo')),
+    
+        condition: '',
+        newList: [],
+        total:1,
+        pageNum:1,
+        pageSize: 10,
+        allId: [],
+        datetime: '',
+        currentType: '',
+    },
+    mounted(){ 
+        
+        let datas = {
+            id: Storage.get('userInfo'),
+            url: '/news/pagingSel',
+        }
+        let res = postAjax('user/checkShrio',datas,'',this)
+        if(res) {
+            this.getNewList(this.pageNum,this.pageSize);
+        }
+    },
+    methods: {
+        loginOut() { //退出
+            postPromise({},'/signout').then(res => {
+                localStorage.removeItem("userInfo");
+            })
+        },
+        details(item) { //详情页面
+            window.location.href = '/editNews?id='+item.newsid;
+        },
+        
+        
+        getNewList(pageNum, pageSize,condition, type,date) { //获取新闻列表
+            let data = {
+                pageNum,
+                pageSize,
+                condition,
+                type,
+                date,
+            }
+            postPromise(data,'news/pagingSel').then(res => {
+                if(res.flag == 0) {
+                    res.map.pageList.map(item => {
+                        item.isChecked = false
+                    })
+                    this.newList = res.map.pageList
+                    this.total = res.number
+                }
+            } ,err => {
+                console.log(err)
+            })
+        },
+        currenPage(e) { //切换分页
+            this.getNewList(e,this.pageSize)
+        },
+
+        delArticle(e,item) { //删除文章
+            let datas = {
+                id: Storage.get('userInfo'),
+                url: '/news/del',
+            }
+            let res = postAjax('user/checkShrio',datas,'',this)
+            if(res) {
+                let data ={}
+                if(e == 1) {
+                    data = {
+                        ids: item.newsid
+                    }
+                }else if(e ==2) {
+                    data = {
+                        ids: item
+                    }
+                }
+                postPromise(data,'news/del').then(res => {
+                    if(res.flag == 0) {
+                        if(res.flag == 0) {
+                           this.$message({
+                                message: '删除成功',
+                                type: 'success'
+                            });
+                        
+                            setTimeout(() => {
+                                location.reload();
+                            },1400)
+                          
+                        }
+                    }
+                } ,err => {
+                    console.log(err)
+                })
+            }
+        },
+
+    
+
+        allDel() { //多选删除
+            if(this.allId == ''){
+                this.$message({
+                    message: '请选择要删除的新闻',
+                    type: 'warning'
+                });
+                return
+            }
+            this.delArticle('2',this.allId.join(','))
+            this.allId = []    
+        },
+
+        
+
+        isShow(item) { // 显示隐藏
+            postPromise({id: item.newsid,flag:item.remarks},'news/hide1').then(res => {
+                if(res.flag == 0) {
+                
+                    if(item.remarks == 0) {
+                        this.$message({
+                            message: '隐藏成功',
+                            type: 'success'
+                        });
+                    }else {
+                        this.$message({
+                            message: '显示成功',
+                            type: 'success'
+                        }); 
+                    }
+                        
+                    this.getNewList(this.pageNum,this.pageSize);
+                   
+                }
+            } ,err => {
+                console.log(err)
+            })
+
+        },
+
+        top(item) { // 置顶
+            postPromise({id: item.newsid},'news/roof').then(res => {
+                if(res.flag == 0) {
+                     this.$message({
+                        message: '置顶成功',
+                        type: 'success'
+                    }); 
+                    this.getNewList(this.pageNum,this.pageSize);
+                }
+            } ,err => {
+                console.log(err)
+            })
+
+        },
+        selectType(e) { //类型选择
+            this.currentType = e
+            this.getNewList(this.pageNum, this.pageSize, this.condition, e,this.datetime)
+        },
+
+        changeBox(e,index) { //复选框
+            e.isChecked = !e.isChecked
+            if(e.isChecked) {
+                this.allId.push(e.newsid)
+            }else {
+                let idx = this.allId.indexOf(e.newsid)
+                this.allId.splice(idx,1)
+            }
+        },
+
+        addNews() {// 新建文章
+            let datas = {
+                id: Storage.get('userInfo'),
+                url: '/addNews',
+            }
+            postAjax('user/checkShrio',datas,'/addNews',this)
+        },
+
+        search() { // 搜素
+            this.getNewList(this.pageNum, this.pageSize, this.condition, this.currentType,this.datetime)
+        }
+
+    }
+
+})
+
+    </script>
+  </body>
+</html>

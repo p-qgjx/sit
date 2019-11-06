@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<title>搜索</title>
+	<style type="text/css">
+		.pd{
+			padding: 0 1rem;
+		}
+		.search{
+			display: flex;
+			width: 100%;
+			position: relative;
+			align-items: center;
+			justify-content: center;
+			margin-top: 2rem;
+
+		}
+		.search > input{
+			height: 3rem;
+			border-radius: 5px;
+			padding-left: 5px;
+			width: 100%;
+			border: 1px solid #ccc;
+			font-size: 1.5rem
+		}
+		.search > img{
+			position: absolute;
+			right: .5rem;
+			width: 3rem;
+			height:3rem;
+		}
+		.hotCi{
+			font-size: 1.4rem;
+		    margin-top: 2rem;
+		    border-bottom: 1px solid #000;
+		    padding-bottom: .5rem;
+		}
+		.list{
+			margin-top: 1rem;
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.list > li {
+			height:2rem;
+			border-radius: 5px;
+			margin-right: 1.2rem;
+			display: flex;
+			align-items: center;
+			justify-content:center;
+			border:1px solid #ccc;
+			padding: 0 1rem;
+		}
+		.cloe{
+			display: flex;
+			align-items: center;
+			justify-content:center;
+			width: 100%;
+			position: fixed;
+			bottom: 2rem;
+		}
+		.cloe > img{
+			width: 2.5rem;
+			height:2.5rem
+		}
+	</style>
+</head>
+<body>
+	<div id="app" v-cloak>
+		<div class="pd">
+			<div class="search">
+				<input v-model="inputVal" v-focus type="text" ref="userName" placeholder="请输入关键词">
+				<img src="../../static/img/search.png" @click="searchResult">
+			</div>
+		</div>
+		<div class="pd">
+			<div class="hotCi">热搜词</div>
+			<ul class="list">
+				<li v-for="item in list" @click="search(item)">{{item}}</li>
+			</ul>
+		</div>
+		<div class="cloe"><img src="../../static/img/index_close.png" @click="back"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#app',
+		data: {
+			list: [],
+			inputVal: '',
+		},
+		mounted() {
+			this.getHotList()
+			this.$nextTick(function(){
+		      	this.$refs.userName.focus()
+		    })  
+
+		},
+		methods:{
+			getHotList() {
+				postPromise({},'news/hotSearch').then(res => {
+					if(res.flag == 0) {
+						this.list = res.map.hot
+					
+					}
+				})
+			},
+
+			search(item) {
+				window.location.href = '/result?keyWord='+ item
+			},
+			searchResult() {
+				this.search(this.inputVal);
+			},
+
+			back() {
+				window.history.back(-1); 
+			}
+		}
+	})
+</script>
+</html>

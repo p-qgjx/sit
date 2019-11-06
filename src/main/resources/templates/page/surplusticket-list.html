@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>盈票列表</title>
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/public.css">
+	<link rel="stylesheet" type="text/css" href="../../static/Phonecss/surplusticket.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/elementUi.css">
+	<script type="text/javascript" src="../../static/js/font.js"></script>
+	<script type="text/javascript" src="../../static/js/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/js/request.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../../static/js/elementUi.js"></script>
+	<style type="text/css">
+		.lsitContent{
+			text-indent: 2em;
+			line-height: 2rem
+		}
+	</style>
+</head>
+<body>
+	<div id="index" v-cloak>
+		<div class="head">
+			<img src="../../static/img/logo.png">
+			<div >
+				<img src="../../static/img/search.png" class="search" @click="goSearch">
+			</div>
+		</div>
+		<ul class="nav">
+			<li><a href="/newsListPhone?id=1">热点</a></li>
+			<li><a href="/newsListPhone?id=2">新政</a></li>
+			<li><a href="/authorListPhone">百家</a></li>
+			<li><a href="/newsListPhone?id=3">课堂</a></li>
+			<li><a href="/activityPhone">活动</a></li>
+			<li><a class="current" href="javascript:;">盈票</a></li>
+		</ul>
+		<div class="content">
+			<div class="style">
+				<img src="../../static/img/banner_src_1.jpg">
+				<div>
+					<strong style="display: flex;justify-content: center;padding-top: 1rem;font-size: 1.8rem">关于盈票</strong>
+					<p style="line-height: 2rem;text-indent: 2em; text-align: justify;">
+						盈票,是一家以F2B（Financial 2 Business ）为商业模式的票据经纪服务金融科技平台
+基于票据与数据,帮助中小微企业构建自身的信用价值体系，全面打通普惠供应链金融，让中小微企业的结算、融资更简易、更高效。同时通过强大的线下地推能力帮助金融机构批量获客,通过线上平台的金融科技能力帮助风险防控、提高效率、降低成本。
+盈票平台基于票据的支付、流通、融资三大功能应用，以票据经纪服务切入供应链金融。</p>
+					<p style="line-height: 2rem;text-indent: 2em; text-align: justify;">
+						目前已创新推出了银票通、商票通、盈票AI票据管家、盈票经纪人四大产品,为金融机构与中小企业建立信息和业务桥梁,通过打破信息不对称、突破地域限制、革新传统银行线下开户模式,实现价格透明、交易合规、免开户,安全、高效、普惠的一站式票据融资服务。
+					</p>
+				</div>
+			</div>
+			<div class="my">
+				<div class="line"></div>
+				<span>我们的产品</span>
+				<div class="line"></div>
+			</div>
+			<ul style="margin-bottom: 2rem">
+				<li style="margin-bottom: 3rem" v-for="(item,index) in list">
+					<div class="icon">
+						<img :src="item.icon">
+					</div>
+					<strong class="title">{{item.name}}</strong>
+					<p class="lsitContent">{{item.introduce}}</p>
+					<div class="look">
+						<div @click="detail(item)">详细了解</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="paging" v-if="total > 10">
+			<el-pagination
+				@current-change="swichPage"
+			 	background
+			  	layout="prev, pager, next"
+			  	:total="total">
+			</el-pagination>
+		</div>
+		<div class="footer">
+			<div>© 2018，盈科票据版权所有 /粤ICP备19049968号-1</div>
+			<div>热线电话：400-0192-188</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	let app = new Vue({
+		el: '#index',
+		data: {
+			list: [],
+			pageNum: 1,
+			pageSize: 10,
+			total:1,
+		},
+		mounted() {
+			this.getList(this.pageNum,this.pageSize)
+		},
+		methods:{
+			getList(pageNum,pageSize){
+				let data = {
+					pageNum,
+					pageSize,
+					
+				}
+				postPromise(data,'product/pagingSel').then(res => {
+					if(res.flag == 0) {
+						this.total = res.number
+						this.list = res.map.pageList
+					}
+				})
+			},
+			swichPage(e) {
+				this.getList(e,this.pageSize)
+			},
+			detail(item) {
+				window.location.href = '/surplusticketdetails?id='+item.id
+			},
+			goSearch() {
+				window.location.href = '/search';
+			}
+		}
+	})
+</script>
+</html>
