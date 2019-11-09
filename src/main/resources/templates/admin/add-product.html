@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>新建招聘</title>
-  <link rel="stylesheet" href="../../static/css/fontawesome.min.css" />
-  <link rel="stylesheet" href="../../static/ui/jquery-ui.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="../../static/css/templatemo-style.css">
-  <link rel="stylesheet" href="../../static/css/elementUi.css">
-  <script src="../../static/js/jquery-3.3.1.min.js"></script>
-  <script src="../../static/ui/jquery-ui.min.js"></script>
-  <script src="../../static/js/bootstrap.min.js"></script>
-  <script src="../../static/js/vue.min.js"></script>
-  <script src="../../static/js/elementUi.js"></script>
-  <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
-  <script src="../../static/js/request.js"></script>
-  <style> 
-    [v-cloak]{
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>新建招聘</title>
+    <link rel="stylesheet" href="../../static/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="../../static/ui/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/templatemo-style.css">
+    <link rel="stylesheet" href="../../static/css/elementUi.css">
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/ui/jquery-ui.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/vue.min.js"></script>
+    <script src="../../static/js/elementUi.js"></script>
+    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+    <script src="../../static/js/request.js"></script>
+    <style>
+        [v-cloak]{
       display:none
     }
-    #editor{
-      margin-bottom:20px;
+    #editor, #editor2 {
+        margin: 10px 0 20px;
       width: 100%;
       background: #fff;
     }
@@ -36,428 +37,332 @@
     .weizhiLine{
       height:2px;
     }
+    .list {
+        padding: 0;
+    }
   </style>
 </head>
+
 <body>
-<div id="app" v-cloak>
-    <nav class="navbar navbar-expand-xl">
-        <div class="container h-100">
-            <img src="../../static/img/logo.png">
-            <a class="navbar-brand" href="javascript:;">
-                <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
-            </a>
-            <button
-                    class="navbar-toggler ml-auto mr-0"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars tm-nav-icon"></i>
-            </button>
+    <div id="app" v-cloak>
+        <nav class="navbar navbar-expand-xl">
+            <div class="container h-100">
+                <img src="../../static/img/logo.png">
+                <a class="navbar-brand" href="javascript:;">
+                    <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
+                </a>
+                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars tm-nav-icon"></i>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto h-100">
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/newsList"
-                        >
-                            <img class="titleIcon" src="../../static/img/wenzhang.png">
-                            <span>招聘</span>
-                        </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto h-100">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/newsList">
+                                <img class="titleIcon" src="../../static/img/wenzhang.png">
+                                <span>招聘</span>
+                            </a>
 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/authorList"
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/authorList">
+                                <img class="titleIcon" src="../../static/img/zuozhe.png">
+                                <span>报名</span>
+                            </a>
 
-                        >
-                            <img class="titleIcon" src="../../static/img/zuozhe.png">
-                            <span>报名</span>
-                        </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/activityList">
+                                <img class="titleIcon" src="../../static/img/huodong.png">
+                                <span>Banner</span>
+                            </a>
 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/activityList"
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/productList">
+                                <img class="titleIcon" src="../../static/img/chanpin.png">
+                                <span>城市</span>
+                            </a>
 
-                        >
-                            <img class="titleIcon" src="../../static/img/huodong.png">
-                            <span>Banner</span>
-                        </a>
+                        </li>
 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/productList"
-
-                        >
-                            <img class="titleIcon" src="../../static/img/chanpin.png">
-                            <span>城市</span>
-                        </a>
-
-                    </li>
-
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link d-block" href="/signout" @click="loginOut">
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="/signout" @click="loginOut">
 
 
-                            <span>{{currentUser.username}}</span>
-                            <span class="out">退出</span>
-                        </a>
-                    </li>
-                </ul>
+                                <span>{{currentUser.username}}</span>
+                                <span class="out">退出</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container tm-mt-big tm-mb-big">
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row currentWzhi">
+                    <div class="col-12">
+                        <span class="weizhi">您的位置:</span>
+                        <span class="subweizhi">文章/新建招聘</span>
+                    </div>
+                </div>
+                <div class="weizhiLine"></div>
+                <div class="row">
+                    <!-- <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto"> -->
+                    <div class="mx-auto">
+                        <div class="row tm-edit-product-row">
+                            <div class="imgWidth">
+                                <div class="fengmian">缩略图</div>
+                                <div class="tm-product-img-dummy mx-auto imgWidth">
+                                    <img :src="from.thumbnail" alt="">
+                                </div>
+                                <div class="parentButton">
+                                    <input id="fileInput" type="file" style="display:none;" @change="addImg($event)" />
+                                    <input type="button" class="btn upButton" value="上传图片" onclick="document.getElementById('fileInput').click();" />
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 ml120">
+                                <form action="" class="tm-edit-product-form">
+                                    <div class="row list">
+                                        <div class="form-group col-6">
+                                            <label for="name">企业名称
+                                            </label>
+                                            <input v-model="from.name" type="text" class="form-contro" />
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="description">城市</label>
+                                            <select class="custom-selectt" v-model="from.city">
+                                                <option v-for="(item,index) in author" :value="item.id">{{item.cityname}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row list">
+                                        <div class="form-group col-6">
+                                            <label for="category">类型</label>
+                                            <select class="custom-selectt" v-model="from.type">
+                                                <option value="1">寒假工</option>
+                                                <option value="2">单招生</option>
+                                                <option value="3">暑假工</option>
+                                                <option value="3">大学生兼职</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="name">工种
+                                            </label>
+                                            <input v-model="from.worktype" type="text" class="form-contro" />
+                                        </div>
+                                    </div>
+                                    <div class="row list">
+                                        <div class="form-group col-6">
+                                            <label for="category">性别</label>
+                                            <select class="custom-selectt" v-model="from.sex">
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                                <option value="3">不限</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="name">年龄区间
+                                            </label>
+                                            <input v-model="from.age" type="text" class="form-contro" />
+                                        </div>
+                                    </div>
+                                    <div class="row list">
+                                        <div class="form-group col-6">
+                                            <label for="name">交通费
+                                            </label>
+                                            <input v-model="from.jtf" type="text" class="form-contro" />
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="name">体检费
+                                            </label>
+                                            <input v-model="from.tjf" type="text" class="form-contro" />
+                                        </div>
+                                    </div>
+                                    <div class="row list">
+                                        <div class="form-group col-6">
+                                            <label for="name">生活费
+                                            </label>
+                                            <input v-model="from.shf" type="text" class="form-contro" />
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="name">推荐费
+                                            </label>
+                                            <input v-model="from.recommend" type="text" class="form-contro" />
+                                        </div>
+                                    </div>
+                                    <div class="row list">
+                                        <div class="form-group col-6">
+                                            <label for="name">已报名人数
+                                            </label>
+                                            <input v-model="from.ennum" type="text" class="form-contro" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <span>招聘简章</span>
+                            <div id="editor"></div>
+                            <span>企业介绍</span>
+                            <div id="editor2"></div>
+                            <div class="funBao">
+                                <button class="btn backs" @click="goBack">返回</button>
+                                <button class="btn backs" @click="clear()">清楚正文格式,重新排版</button>
+                                <button class="btn baocun" @click="saveArticles">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
 
-  <div class="container tm-mt-big tm-mb-big">
-   <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-    <div class="row currentWzhi">
-      <div class="col-12">
-        <span class="weizhi">您的位置:</span>
-       <span class="subweizhi">文章/新建招聘</span>
-      </div>
     </div>
-    <div class="weizhiLine"></div>
-    <div class="row">
-      <!-- <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto"> -->
-      <div class="mx-auto">
-          <div class="row tm-edit-product-row">
-            <div class="imgWidth">
-              <div class="fengmian">缩略图</div>
-              <div class="tm-product-img-dummy mx-auto imgWidth">
-                <img :src="from.thumbnail" alt="">
-              </div>
-              <div class="parentButton">
-                <input id="fileInput" type="file" style="display:none;"  @change="addImg($event)"/>
-                <input
-                  type="button"
-                  class="btn upButton"
-                  value="上传图片"
-                  onclick="document.getElementById('fileInput').click();"
-                />
-              </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 ml120">
-              <form action="" class="tm-edit-product-form">
-                <div class="form-group mb-3">
-                  <label
-                          for="name"
-                  >企业名称
-                  </label>
-                  <input
-                    v-model="from.name"
-                    type="text"
-                    class="form-contro"
-                  />
-                </div>
-                <div class="form-group mb-3">
-                  <label
-                          for="description"
-                  >城市</label
-                  >
-                    <select class="custom-selectt" v-model="from.city">
-                        <option v-for="(item,index) in author" :value="item.id">{{item.cityname}}</option>
-                    </select>
+    <script>
+        let E = window.wangEditor
+        let editor = new E('#editor')
+        let editor2 = new E('#editor2')
+        let app = new Vue({
+            el: '#app',
+            data: {
+                currentUser: JSON.parse(localStorage.getItem('userInfo')),
+                author: [],
+                articleType: [],
+                from: {
 
-
-                </div>
-                <div class="form-group mb-3">
-                  <label
-                          for="category"
-                  >类型</label
-                  >
-                  <select class="custom-selectt" v-model="from.type">
-                      <option value="1" >寒假工</option>
-                      <option value="2">单招生</option>
-                      <option value="3">暑假工</option>
-                      <option value="3">大学生兼职</option>
-                  </select>
-                </div>
-
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >工种
-                      </label>
-                      <input
-                              v-model="from.worktype"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="category"
-                      >性别</label
-                      >
-                      <select class="custom-selectt" v-model="from.sex">
-                          <option value="1" >男</option>
-                          <option value="2">女</option>
-                          <option value="3">不限</option>
-                      </select>
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >年龄区间
-                      </label>
-                      <input
-                              v-model="from.age"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >招聘人数
-                      </label>
-                      <input
-                              v-model="from.number"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >工资
-                      </label>
-                      <input
-                              v-model="from.wages"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >交通费
-                      </label>
-                      <input
-                              v-model="from.jtf"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >体检费
-                      </label>
-                      <input
-                              v-model="from.tjf"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >生活费
-                      </label>
-                      <input
-                              v-model="from.shf"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >推荐费
-                      </label>
-                      <input
-                              v-model="from.recommend"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
-                  <div class="form-group mb-3">
-                      <label
-                              for="name"
-                      >已报名人数
-                      </label>
-                      <input
-                              v-model="from.ennum"
-                              type="text"
-                              class="form-contro"
-                      />
-                  </div>
+                    thumbnail: '',
+                    name: '',
+                    city: '',
+                    type: 1,
+                    worktype: '',
+                    sex: 1,
+                    age: '',
+                    number: '',
+                    wages: '',
+                    jtf: '',
+                    tjf: '',
+                    shf: '',
+                    recommend: '',
+                    information: '',
+                    aboutus: '',
+                    ennum: '',
+                    author: [],
 
 
 
+                }
+            },
+            mounted() {
+                this.createE();
+                this.createE2();
+                this.getInfo()
+            },
+            methods: {
+                createE() {
 
-            </div>
-            <span>招聘简章</span>
-            <div id="editor"></div>
-              <span>企业介绍</span>
-              <div id="editor2"></div>
-            <div class="funBao">
-              <button class="btn backs" @click="goBack">返回</button>
-              <button class="btn backs"  @click="clear()">清楚正文格式,重新排版</button>
-              <button class="btn baocun" @click="saveArticles">保存</button>
-            </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                    editor.customConfig.showLinkImg = false
+                    editor.customConfig.customUploadImg = function (files, insert) {
+                        files.map((item, index) => {
+                            let formData = new FormData();
+                            formData.append('file', item)
+                            upFile(formData, 'uplode/image').then(res => {
+                                insert(res)
+                            }, err => {
+                                console.log(err)
+                            })
+                        })
+                    };
+                    editor.customConfig.onchange = (html) => {
+                        this.from.information = html
+                        console.log(html)
+                    };
+                    editor.create()
+                },
+                createE2() {
 
-</div>
-<script>
-    let E = window.wangEditor
-      let editor = new E('#editor')
-     let editor2 = new E('#editor2')
-      let app = new Vue({
-          el: '#app',
-          data: {
-              currentUser: JSON.parse(localStorage.getItem('userInfo')),
-              author:[],
-              articleType: [],
-              from: {
+                    editor2.customConfig.showLinkImg = false
+                    editor2.customConfig.customUploadImg = function (files, insert) {
+                        files.map((item, index) => {
+                            let formData = new FormData();
+                            formData.append('file', item)
+                            upFile(formData, 'uplode/image').then(res => {
+                                insert(res)
+                            }, err => {
+                                console.log(err)
+                            })
+                        })
+                    };
+                    editor2.customConfig.onchange = (html) => {
+                        this.from.aboutus = html
+                        console.log(html)
+                    };
+                    editor2.create()
+                },
+                loginOut() { //退出
+                    postPromise({}, '/user_info/sign_out').then(res => {
+                        localStorage.removeItem("userInfo");
+                    })
+                },
 
-                  thumbnail: '',
-                  name: '',
-                  city: '',
-                  type: 1,
-                  worktype: '',
-                  sex: 1,
-                  age: '',
-                  number: '',
-                  wages: '',
-                  jtf: '',
-                  tjf: '',
-                  shf: '',
-                  recommend: '',
-                  information: '',
-                  aboutus: '',
-                  ennum:'',
-                  author:[],
+                addImg(e) { //上传封面图片
+                    let formData = new FormData();
+                    formData.append('file', e.target.files[0]);
+                    upFile(formData, 'uplode/image').then(res => {
+                        this.from.thumbnail = res
+                    }, err => {
+                        console.log(err)
+                    })
+                },
 
-
-
-              }
-          },
-          mounted() {
-              this.createE();
-              this.createE2();
-              this.getInfo()
-          },
-          methods: {
-              createE() {
-                 
-                  editor.customConfig.showLinkImg = false
-                  editor.customConfig.customUploadImg = function (files, insert) {
-                      files.map((item,index) => {
-                          let formData = new FormData();
-                          formData.append('file',item)
-                          upFile(formData,'uplode/image').then(res => {
-                              insert(res)
-                          }, err => {
-                              console.log(err)
-                          })
-                      })
-                  };
-                  editor.customConfig.onchange = (html) => {
-                     this.from.information = html
-                     console.log(html)
-                  };
-                  editor.create()
-              },
-              createE2() {
-
-                  editor2.customConfig.showLinkImg = false
-                  editor2.customConfig.customUploadImg = function (files, insert) {
-                      files.map((item,index) => {
-                          let formData = new FormData();
-                      formData.append('file',item)
-                      upFile(formData,'uplode/image').then(res => {
-                          insert(res)
-                      }, err => {
-                          console.log(err)
-                      })
-                  })
-                  };
-                  editor2.customConfig.onchange = (html) => {
-                      this.from.aboutus = html
-                      console.log(html)
-                  };
-                  editor2.create()
-              },
-              loginOut() { //退出
-                  postPromise({},'/user_info/sign_out').then(res => {
-                      localStorage.removeItem("userInfo");
-              })
-              },
-
-              addImg(e) { //上传封面图片
-                  let formData = new FormData();
-                  formData.append('file',e.target.files[0]);
-                  upFile(formData,'uplode/image').then(res => {
-                      this.from.thumbnail = res
-                  }, err => {
-                      console.log(err)
-                  })
-              },
-
-              getInfo() { //获取信息
-                  postPromise({},'city/sel').then(res => {
-                      if(res.flag == 0) {
+                getInfo() { //获取信息
+                    postPromise({}, 'city/sel').then(res => {
+                        if (res.flag == 0) {
 
 
-                          this.author = res.map.list;
-                          this.from.city = res.map.list[0].id
-                      }
-                  } ,err => {
-                      console.log(err)
-                  })
-              },
+                            this.author = res.map.list;
+                            this.from.city = res.map.list[0].id
+                        }
+                    }, err => {
+                        console.log(err)
+                    })
+                },
 
-              saveArticles() { //保存文章
-                  postPromise(this.from,'work/add').then(res => {
-                      if(res.flag == 0) {
-                          this.$message({
-                              message: '新建成功',
-                              type: 'success'
-                          });
-                          setTimeout(() => {
-                            this.goBack();
-                          },1400);
-                      }
-                  } ,err => {
-                      console.log(err)
-                  })
-              },
+                saveArticles() { //保存文章
+                    postPromise(this.from, 'work/add').then(res => {
+                        if (res.flag == 0) {
+                            this.$message({
+                                message: '新建成功',
+                                type: 'success'
+                            });
+                            setTimeout(() => {
+                                this.goBack();
+                            }, 1400);
+                        }
+                    }, err => {
+                        console.log(err)
+                    })
+                },
 
-              clear() {
-                  this.from.content = this.from.content.replace(/(\n)/g, "");  
-                      this.from.content = this.from.content.replace(/(\t)/g, "");  
-                      this.from.content = this.from.content.replace(/(\r)/g, "");  
-                      this.from.content = this.from.content.replace(/<\/?[^>]*>/g, "");  
-                      this.from.content = this.from.content.replace(/\s*/g, "");
-                      editor.txt.html(this.from.content);
-                  editor2.txt.html(this.from.content);
-              },
+                clear() {
+                    this.from.content = this.from.content.replace(/(\n)/g, "");
+                    this.from.content = this.from.content.replace(/(\t)/g, "");
+                    this.from.content = this.from.content.replace(/(\r)/g, "");
+                    this.from.content = this.from.content.replace(/<\/?[^>]*>/g, "");
+                    this.from.content = this.from.content.replace(/\s*/g, "");
+                    editor.txt.html(this.from.content);
+                    editor2.txt.html(this.from.content);
+                },
 
-              goBack() {
-                location.replace('/newsList');
+                goBack() {
+                    location.replace('/newsList');
 
-              }
+                }
 
-          }
-      })
-</script>
+            }
+        })
+    </script>
 </body>
+
 </html>
