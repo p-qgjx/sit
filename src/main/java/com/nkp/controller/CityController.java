@@ -8,6 +8,7 @@ import com.nkp.dao.CityMapper;
 import com.nkp.dao.WorkMapper;
 import com.nkp.pojo.Banner;
 import com.nkp.pojo.City;
+import com.nkp.pojo.Enroll;
 import com.nkp.pojo.WorkWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -105,6 +107,20 @@ public class CityController {
         dataPackJSON.setMsg("SUCCESS");
         return dataPackJSON;
 
+    }
+
+    @RequestMapping("/selById")
+    public DataPackJSON selById(HttpServletRequest request,int id){
+        City city=cityMapper.selectByPrimaryKey(id);
+        DataPackJSON dataPackJSON=new DataPackJSON();
+        Map map=new HashMap();
+        HttpSession session = request.getSession();
+        map.put("city",city);
+        //map.put("session_user",(UserInfo) session.getAttribute("session_user"));
+        dataPackJSON.setMap(map);
+        dataPackJSON.setFlag(0);
+        dataPackJSON.setMsg("SUCCESS");
+        return dataPackJSON;
     }
 
 

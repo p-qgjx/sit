@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>编辑作者</title>
+    <title>编辑报名</title>
     <link rel="stylesheet" href="../../static/css/fontawesome.min.css" />
     <link rel="stylesheet" href="../../static/ui/jquery-ui.min.css" type="text/css" />
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
@@ -36,6 +36,48 @@
         .weizhiLine{
             height:2px;
         }
+        .quanxian{
+            width: 100%
+        }
+        .quanxinBox{
+            border: 1px solid #222;
+        }
+        .quanxianT,.quanxianC{
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+        .quanxianT > li,.quanxianC > li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height:40px;
+            border-bottom: 1px solid #222 !important;
+            border-right: 1px solid #222
+        }
+        .quanxianT > li:nth-child(4),.quanxianC > li:nth-child(4) {
+            border-right: none
+        }
+        .row{
+            justify-content:space-between;
+        }
+        .imgWidth{
+            width: 200px;
+            height:200px;
+        }
+        .quanxianC > li{
+            border-bottom: none
+        }
+        .selectC{
+            display: flex;
+            justify-content:space-around !important;
+            align-items: center;
+
+        }
+        .selectC > lable{
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -43,9 +85,9 @@
 
     <nav class="navbar navbar-expand-xl">
         <div class="container h-100">
-            <img src="../../static/img/tupian1.png">
+            <img src="../../static/img/logo.png">
             <a class="navbar-brand" href="javascript:;">
-                <h1 class="tm-site-title mb-0">盈票服务号管理</h1>
+                <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
             </a>
             <button
                     class="navbar-toggler ml-auto mr-0"
@@ -65,10 +107,9 @@
                         <a
                                 class="nav-link dropdown-toggle"
                                 href="/newsList"
-                            
                         >
                             <img class="titleIcon" src="../../static/img/wenzhang.png">
-                            <span>文章</span>
+                            <span>招聘</span>
                         </a>
 
                     </li>
@@ -76,10 +117,10 @@
                         <a
                                 class="nav-link dropdown-toggle"
                                 href="/authorList"
-                                
+
                         >
                             <img class="titleIcon" src="../../static/img/zuozhe.png">
-                            <span>作者</span>
+                            <span>报名</span>
                         </a>
 
                     </li>
@@ -90,7 +131,7 @@
 
                         >
                             <img class="titleIcon" src="../../static/img/huodong.png">
-                            <span>活动</span>
+                            <span>Banner</span>
                         </a>
 
                     </li>
@@ -98,34 +139,22 @@
                         <a
                                 class="nav-link dropdown-toggle"
                                 href="/productList"
-                               
+
                         >
                             <img class="titleIcon" src="../../static/img/chanpin.png">
-                            <span>产品</span>
+                            <span>城市</span>
                         </a>
 
                     </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/userList"
-                               
-                        >
-                            <img class="titleIcon" src="../../static/img/xitong.png">
-                            <span>系统</span>
-                        </a>
-                    </li>
+
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link d-block" href="/signout" @click="loginOut">
 
-                            <img
-                                    style="width: 50px;height: 50px;border-radius: 50%"
-                                    :src="currentUser.purl"
-                                    alt="">
+
                             <span>{{currentUser.username}}</span>
-                             <span class="out">退出</span>
+                            <span class="out">退出</span>
                         </a>
                     </li>
                 </ul>
@@ -138,7 +167,7 @@
             <div class="row currentWzhi">
                 <div class="col-12">
                     <span class="weizhi">您的位置:</span>
-                    <span class="subweizhi">作者/编辑作者</span>
+                    <span class="subweizhi">作者/新增报名</span>
                 </div>
             </div>
             <div class="weizhiLine"></div>
@@ -146,65 +175,72 @@
                 <!-- <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto"> -->
                 <div class="mx-auto">
                     <div class="row tm-edit-product-row">
-                        <div class="imgWidth">
-                            <div class="fengmian">头像</div>
-                            <div class="tm-product-img-dummy mx-auto imgWidth">
-                                <img :src="from.headpicture" alt="">
-                            </div>
-                            <div class="parentButton">
-                                <input id="fileInput" type="file" style="display:none;"  @change="addImg($event)"/>
-                                <input
-                                        type="button"
-                                        class="btn upButton"
-                                        value="选择图片"
-                                        onclick="document.getElementById('fileInput').click();"
-                                />
-                            </div>
-                        </div>
+
                         <div class="col-xl-6 col-lg-6 col-md-12 ml120">
                             <form action="" class="tm-edit-product-form">
                                 <div class="form-group mb-3">
                                     <label
                                             for="name"
-                                    >作者名称
+                                    >您的姓名
                                     </label>
                                     <input
                                             v-model="from.name"
                                             type="text"
                                             class="form-contro"
-                                            placeholder="请输入作者名称，8字以内"
+
                                     />
                                 </div>
                                 <div class="form-group mb-3">
                                     <label
                                             for="description"
-                                    >身份标签</label
+                                    >性别</label
                                     >
 
-                                    <input v-model="from.identity" class="form-contro" placeholder="请输入身份标签，20字以内"/>
+                                    <select class="custom-selectt" v-model="from.sex">
+                                        <option value="1" >男</option>
+                                        <option value="2">女</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label
                                             for="category"
-                                    >所属机构</label
+                                    >手机号码</label
                                     >
-                                    <select class="custom-selectt" v-model="from.atype">
-                                        <option value="1">盈票供应链研究院</option>
-                                        <option value="2">大创知服</option>
-                                        <option value="3">自媒体撰稿人</option>
-                                    </select>
+                                    <input
+                                            v-model="from.phone"
+                                            type="text"
+                                            class="form-contro"
+
+                                    />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label
+                                            for="category"
+                                    >QQ</label
+                                    >
+                                    <input
+                                            v-model="from.qq"
+                                            type="text"
+                                            class="form-contro"
+
+                                    />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label
+                                            for="category"
+                                    >学校</label
+                                    >
+                                    <input
+                                            v-model="from.school"
+                                            type="text"
+                                            class="form-contro"
+
+                                    />
                                 </div>
                         </div>
 
-                        <div style="width: 100%;margin-top: 70px;margin-bottom: 20px">
-                            <label
-                                    
-                            >介绍</label
-                            >
 
-                            <textarea v-model="from.introduce" class="form-control" style="width:100%" rows="10"></textarea>
-                        </div>
                         <div class="funBao">
                             <button class="btn backs" @click="goBack">返回</button>
                             <button class="btn baocun" @click="saveArticles">保存</button>
@@ -215,9 +251,9 @@
             </div>
         </div>
     </div>
-    <div class="h70">
+    <!--<div class="h70">
         <iframe class="iframeBox" src="/footer"></iframe>
-    </div>
+    </div>-->
 </div>
 <script>
 
@@ -228,14 +264,16 @@
             articleType: [],
             from: {
                 name : '',
-                headpicture:'',
-                identity: '',
-                introduce: '',
-                atype:'',
-            }
+                sex:'',
+                phone: '',
+                qq: '',
+                school:'',
+            },
+
+
+
         },
         mounted() {
-
             this.getDetail();
 
         },
@@ -244,9 +282,18 @@
                 let reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
                 if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
             },
+            getDetail() {
+                postPromise({id: this.getQueryStringRegExp('id')},'enroll/selById').then(res => {
+                    if(res.flag == 0) {
+                    this.from = res.map.enroll
+                }
+            }, err => {
+
+                })
+            },
 
             loginOut() { //退出
-                postPromise({},'/signout').then(res => {
+                postPromise({},'/user_info/sign_out').then(res => {
                     localStorage.removeItem("userInfo");
             })
             },
@@ -263,15 +310,25 @@
 
 
             saveArticles() { //保存作者
-                //this.from.id = this.getQueryStringRegExp('id');
+                // this.from.id = this.getQueryStringRegExp('id');
+                /*this.from.jsonParam.map((item) => {
+                    item.subChecked.map((subItem) => {
+                        if(subItem.isChecked){
+                            subItem.isChecked = subItem.num
+                        }else {
+                             subItem.isChecked = 0
+                        }
+                    })
+                })*/
+                // console.log(this.from)
+                // delete this.from.creattime
+                // delete this.from.explain
 
-                delete this.from.creattime
-                delete this.from.explain
-                postPromise(this.from,'author/up').then(res => {
+                postPromise(this.from,'enroll/up').then(res => {
                     if(res.flag == 0) {
                     this.$message({
-                        message: '更新成功',
-                        type: 'warning'
+                        message: '保存成功',
+                        type: 'success'
                     });
                     setTimeout(() => {
                         this.goBack();
@@ -281,16 +338,24 @@
                     console.log(err)
                 })
             },
-            getDetail() {
-                postPromise({id: this.getQueryStringRegExp('id')},'author/selById1').then(res => {
-                    if(res.flag == 0) {
-                    this.from = res.map.activity
-                }
-            }, err => {
 
-                })
+            changeAll(item,index) { //全选与全不选
+                item.isAllElection = !item.isAllElection;
+                if(item.isAllElection) {
+                    item.subChecked.map(item => {
+                        item.isChecked = true
+                    })
+                }else {
+                    item.subChecked.map(item => {
+                        item.isChecked = false
+                    })
+                }
             },
 
+            singleChecked(list,idx,item) { //单个选择复选框
+                list.isChecked = !list.isChecked
+                console.log(item.subChecked)
+            },
 
             goBack() {
                 location.replace('/authorList');
