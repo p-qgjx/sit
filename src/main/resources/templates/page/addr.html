@@ -12,11 +12,11 @@
 
 <body>
     <div class="menu_main">
-        <div class="menu-a-left"> <a href="./index.html"><img src="../../static/images/logo.png" class="menu_back" alt="勤工助学官网" /></a>
+        <div class="menu-a-left"> <a href="/index"><img src="../../static/images/logo.png" class="menu_back" alt="勤工助学官网" /></a>
         </div>
         <!-- <div class="menu-a-center"> <span id="">大学生寒暑假找工作首选品牌</span></div> -->
         <div class="menu-a-right">
-            <a href="./addr.html">城市</a>
+            <a href="/addr">城市</a>
         </div>
     </div>
     <!--导航菜单-->
@@ -118,7 +118,7 @@
                     // 进入详情
                     $('.item').on('click', function () {
                         let id = $(this).attr('data-id')
-                        window.location.href = './info.html?id=' + id
+                        window.location.href = '/info?id=' + id
                     })
                 }
             })
