@@ -94,6 +94,9 @@ public class WorkController {
 
     @RequestMapping("/pagingSel")
     public DataPackJSON pagingSel(HttpServletRequest request,int pageNum,int pageSize,Integer type ,Integer city,String name,Date date){
+        if(city==0){
+            city=null;
+        }
         DataPackJSON dataPackJSON=new DataPackJSON();
         List res=new ArrayList();
         PageHelper.startPage(pageNum,pageSize);
