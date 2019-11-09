@@ -87,4 +87,11 @@
     set cityName = #{cityname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selLike"  resultMap="BaseResultMap">
+    select * from city where 1=1
+    <if test="name != null and name.trim() !=''">
+      and cityName like "%${name}%"
+    </if>
+  </select>
 </mapper>

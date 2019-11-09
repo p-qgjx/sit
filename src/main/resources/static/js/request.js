@@ -1,4 +1,4 @@
-let address = 'http://xy-yp.natapp1.cc/'
+let address = 'http://xingyikeji.natapp1.cc/'
 function postPromise(params, path) {
     return new Promise((resolve, reject) => {
        $.ajax({

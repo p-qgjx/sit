@@ -40,105 +40,91 @@
 </head>
 <body>
 <div id="app" v-cloak>
-  <nav class="navbar navbar-expand-xl">
-    <div class="container h-100">
-      <img src="../../static/img/tupian1.png">
-      <a class="navbar-brand" href="javascript:;">
-        <h1 class="tm-site-title mb-0">盈票服务号管理</h1>
-      </a>
-      <button
-              class="navbar-toggler ml-auto mr-0"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars tm-nav-icon"></i>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto h-100">
-            <li class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="/newsList"
-                    
-                >
-                    <img class="titleIcon" src="../../static/img/wenzhang.png">
-                    <span>文章</span>
-                </a>
-
-            </li>
-            <li class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="/authorList"
-                        
-                >
-                    <img class="titleIcon" src="../../static/img/zuozhe.png">
-                    <span>作者</span>
-                </a>
-
-            </li>
-            <li class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="/activityList"
-
-                >
-                    <img class="titleIcon" src="../../static/img/huodong.png">
-                    <span>活动</span>
-                </a>
-
-            </li>
-            <li class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="/productList"
-                       
-                >
-                    <img class="titleIcon" src="../../static/img/chanpin.png">
-                    <span>产品</span>
-                </a>
-
-            </li>
-            <li class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="/userList"
-                       
-                >
-                    <img class="titleIcon" src="../../static/img/xitong.png">
-                    <span>系统</span>
-                </a>
-            </li>
-        </ul>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link d-block" href="/signout" @click="loginOut">
-
-              <img
-                      style="width: 50px;height: 50px;border-radius: 50%"
-                      :src="currentUser.purl"
-                      alt="">
-              <span>{{currentUser.username}}</span>
-               <span class="out">退出</span>
+    <nav class="navbar navbar-expand-xl">
+        <div class="container h-100">
+            <img src="../../static/img/logo.png">
+            <a class="navbar-brand" href="javascript:;">
+                <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
             </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+            <button
+                    class="navbar-toggler ml-auto mr-0"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars tm-nav-icon"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto h-100">
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="/newsList"
+                        >
+                            <img class="titleIcon" src="../../static/img/wenzhang.png">
+                            <span>招聘</span>
+                        </a>
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="/authorList"
+
+                        >
+                            <img class="titleIcon" src="../../static/img/zuozhe.png">
+                            <span>报名</span>
+                        </a>
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="/activityList"
+
+                        >
+                            <img class="titleIcon" src="../../static/img/huodong.png">
+                            <span>Banner</span>
+                        </a>
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="/productList"
+
+                        >
+                            <img class="titleIcon" src="../../static/img/chanpin.png">
+                            <span>城市</span>
+                        </a>
+
+                    </li>
+
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link d-block" href="/signout" @click="loginOut">
+
+
+                            <span>{{currentUser.username}}</span>
+                            <span class="out">退出</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
   <div class="container tm-mt-big tm-mb-big">
    <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
     <div class="row currentWzhi">
       <div class="col-12">
         <span class="weizhi">您的位置:</span>
-       <span class="subweizhi">文章/新建文章</span>
+       <span class="subweizhi">文章/新建招聘</span>
       </div>
     </div>
     <div class="weizhiLine"></div>
@@ -147,16 +133,16 @@
       <div class="mx-auto">
           <div class="row tm-edit-product-row">
             <div class="imgWidth">
-              <div class="fengmian">封面</div>
+              <div class="fengmian">缩略图</div>
               <div class="tm-product-img-dummy mx-auto imgWidth">
-                <img :src="from.toppicture" alt="">
+                <img :src="from.thumbnail" alt="">
               </div>
               <div class="parentButton">
                 <input id="fileInput" type="file" style="display:none;"  @change="addImg($event)"/>
                 <input
                   type="button"
                   class="btn upButton"
-                  value="上传封面图片"
+                  value="上传图片"
                   onclick="document.getElementById('fileInput').click();"
                 />
               </div>
@@ -166,10 +152,10 @@
                 <div class="form-group mb-3">
                   <label
                           for="name"
-                  >文章标题
+                  >企业名称
                   </label>
                   <input
-                    v-model="from.title"
+                    v-model="from.name"
                     type="text"
                     class="form-contro"
                   />
@@ -177,32 +163,156 @@
                 <div class="form-group mb-3">
                   <label
                           for="description"
-                  >关键词</label
+                  >城市</label
                   >
+                    <select class="custom-selectt" v-model="from.city">
+                        <option v-for="(item,index) in author" :value="item.id">{{item.name}}</option>
+                    </select>
 
-                  <input v-model="from.keyword" class="form-contro" placeholder="注：关键词请用逗号隔开。如：票据，ABS，"/>
+
                 </div>
                 <div class="form-group mb-3">
                   <label
                           for="category"
-                  >作者</label
+                  >类型</label
                   >
-                  <select class="custom-selectt" v-model="from.author">
-                    <option v-for="(item,index) in author" :value="item.id">{{item.name}}</option>
+                  <select class="custom-selectt" v-model="from.type">
+                      <option value="1" >寒假工</option>
+                      <option value="2">单招生</option>
+                      <option value="3">暑假工</option>
+                      <option value="3">大学生兼职</option>
                   </select>
                 </div>
-                <div class="form-group mb-3">
-                  <label
-                          for="category"
-                  >文章类型</label
-                  >
-                  <select class="custom-selectt" v-model="from.newstype">
-                    <option v-for="(items,idx) in articleType" :value="items.typeid">{{items.name}}</option>
-                  </select>
-                </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >工种
+                      </label>
+                      <input
+                              v-model="from.worktype"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >工种
+                      </label>
+                      <input
+                              v-model="from.worktype"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="category"
+                      >性别</label
+                      >
+                      <select class="custom-selectt" v-model="from.sex">
+                          <option value="1" >男</option>
+                          <option value="2">女</option>
+                          <option value="3">不限</option>
+                      </select>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >年龄区间
+                      </label>
+                      <input
+                              v-model="from.age"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >招聘人数
+                      </label>
+                      <input
+                              v-model="from.number"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >工资
+                      </label>
+                      <input
+                              v-model="from.wages"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >交通费
+                      </label>
+                      <input
+                              v-model="from.jtf"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >体检费
+                      </label>
+                      <input
+                              v-model="from.tjf"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >生活费
+                      </label>
+                      <input
+                              v-model="from.shf"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >推荐费
+                      </label>
+                      <input
+                              v-model="from.recommend"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+                  <div class="form-group mb-3">
+                      <label
+                              for="name"
+                      >已报名人数
+                      </label>
+                      <input
+                              v-model="from.ennum"
+                              type="text"
+                              class="form-contro"
+                      />
+                  </div>
+
+
+
+
             </div>
-            <span>正文</span>
+            <span>招聘简章</span>
             <div id="editor"></div>
+              <span>企业介绍</span>
+              <div id="editor2"></div>
             <div class="funBao">
               <button class="btn backs" @click="goBack">返回</button>
               <button class="btn backs"  @click="clear()">清楚正文格式,重新排版</button>
@@ -214,13 +324,12 @@
       </div>
     </div>
   </div>
-    <div class="h70">
-        <iframe class="iframeBox" src="/footer"></iframe>
-    </div>
+
 </div>
 <script>
     let E = window.wangEditor
       let editor = new E('#editor')
+     let editor2 = new E('#editor2')
       let app = new Vue({
           el: '#app',
           data: {
@@ -238,6 +347,7 @@
           },
           mounted() {
               this.createE();
+              this.createE2();
               this.getInfo()
           },
           methods: {
@@ -260,6 +370,26 @@
                      console.log(html)
                   };
                   editor.create()
+              },
+              createE2() {
+
+                  editor2.customConfig.showLinkImg = false
+                  editor2.customConfig.customUploadImg = function (files, insert) {
+                      files.map((item,index) => {
+                          let formData = new FormData();
+                      formData.append('file',item)
+                      upFile(formData,'uplode/image').then(res => {
+                          insert(res)
+                      }, err => {
+                          console.log(err)
+                      })
+                  })
+                  };
+                  editor2.customConfig.onchange = (html) => {
+                      this.from.content = html
+                      console.log(html)
+                  };
+                  editor2.create()
               },
             loginOut() { //退出
               postPromise({},'/signout').then(res => {

@@ -1,9 +1,12 @@
 package com.nkp.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nkp.config.utils.DataPackJSON;
 import com.nkp.config.utils.NewDateTime;
 import com.nkp.dao.CityMapper;
 import com.nkp.dao.WorkMapper;
+import com.nkp.pojo.Banner;
 import com.nkp.pojo.City;
 import com.nkp.pojo.WorkWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +84,23 @@ public class CityController {
         List<City> list=cityMapper.sel();
         map.put("list",list);
         dataPackJSON.setMap(map);
+        dataPackJSON.setFlag(0);
+        dataPackJSON.setMsg("SUCCESS");
+        return dataPackJSON;
+
+    }
+
+    @RequestMapping("/pagingSel")
+    public DataPackJSON pagingSel(HttpServletRequest request, int pageNum, int pageSize,   String name){
+        DataPackJSON dataPackJSON=new DataPackJSON();
+        PageHelper.startPage(pageNum,pageSize);
+        List<Banner> list=cityMapper.selLike(name);
+        PageInfo<Banner> pageInfo = new PageInfo<>(list);
+        List<Banner> pageList = pageInfo.getList();
+        dataPackJSON.setNumber((int)pageInfo.getTotal());
+        Map all=new HashMap();
+        all.put("pageList",pageList);
+        dataPackJSON.setMap(all);
         dataPackJSON.setFlag(0);
         dataPackJSON.setMsg("SUCCESS");
         return dataPackJSON;

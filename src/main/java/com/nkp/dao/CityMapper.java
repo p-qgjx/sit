@@ -1,6 +1,8 @@
 package com.nkp.dao;
 
+import com.nkp.pojo.Banner;
 import com.nkp.pojo.City;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -55,4 +57,6 @@ public interface CityMapper {
     int updateByPrimaryKey(City record);
     @Select("select * from city")
     List<City> sel();
+
+    List<Banner> selLike(@Param("name") String name);
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>作者列表</title>
+    <title>报名列表</title>
     <link rel="stylesheet" href="../../static/css/fontawesome.min.css" />
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
 
@@ -36,18 +36,15 @@
             overflow:hidden;
             text-overflow:ellipsis;
         }
-        .typeList > div{
-            width: 145px
-        }
     </style>
 </head>
 <body id="reportsPage">
 <div id="home" v-cloak>
     <nav class="navbar navbar-expand-xl">
         <div class="container h-100">
-            <img src="../../static/img/tupian1.png">
+            <img src="../../static/img/logo.png">
             <a class="navbar-brand" href="javascript:;">
-                <h1 class="tm-site-title mb-0">盈票服务号管理</h1>
+                <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
             </a>
             <button
                     class="navbar-toggler ml-auto mr-0"
@@ -67,21 +64,20 @@
                         <a
                                 class="nav-link dropdown-toggle"
                                 href="/newsList"
-                            
                         >
                             <img class="titleIcon" src="../../static/img/wenzhang.png">
-                            <span>文章</span>
+                            <span>招聘</span>
                         </a>
 
                     </li>
                     <li class="nav-item dropdown">
                         <a
                                 class="nav-link dropdown-toggle"
-                                href="javascript:;"
-                                
+                                href="/authorList"
+
                         >
                             <img class="titleIcon" src="../../static/img/zuozhe.png">
-                            <span>作者</span>
+                            <span>报名</span>
                         </a>
 
                     </li>
@@ -89,9 +85,10 @@
                         <a
                                 class="nav-link dropdown-toggle"
                                 href="/activityList"
+
                         >
                             <img class="titleIcon" src="../../static/img/huodong.png">
-                            <span>活动</span>
+                            <span>Banner</span>
                         </a>
 
                     </li>
@@ -99,34 +96,22 @@
                         <a
                                 class="nav-link dropdown-toggle"
                                 href="/productList"
-                               
+
                         >
                             <img class="titleIcon" src="../../static/img/chanpin.png">
-                            <span>产品</span>
+                            <span>城市</span>
                         </a>
 
                     </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/userList"
-                               
-                        >
-                            <img class="titleIcon" src="../../static/img/xitong.png">
-                            <span>系统</span>
-                        </a>
-                    </li>
+
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link d-block" href="/signout" @click="loginOut">
 
-                            <img
-                                    style="width: 50px;height: 50px;border-radius: 50%"
-                                    :src="currentUser.purl"
-                                    alt="">
+
                             <span>{{currentUser.username}}</span>
-                             <span class="out">退出</span>
+                            <span class="out">退出</span>
                         </a>
                     </li>
                 </ul>
@@ -139,79 +124,44 @@
                 <input
                         v-model="condition"
                         type=""
-                        placeholder="请输入标题关键词"
+                        placeholder="请输入学生名称关键词"
                         class="searchInpt">
-                <div>
-                    <!--  <el-date-picker
-                         style="border-radius: none;border-color: #444"
-                       v-model="datetime"
-                       value-format="yyyy-M-MM"
-                       type="date"
-                       placeholder="选择日期">
-                     </el-date-picker> -->
 
-                    <el-date-picker
-                            value-format="yyyy-MM-dd HH:mm:ss"
-
-                            v-model="datetime"
-                            type="datetime"
-                            placeholder="请选择选择日期时间">
-                    </el-date-picker>
-                </div>
                 <button class="btns" @click="search">搜索</button>
             </div>
-            <div class="addAlls" @click="addAuthor">新增作者</div>
+            <div class="addAlls" @click="addNews">新增报名</div>
         </div>
-        <div class="subFun">
-            <span>所属机构：</span>
-            <div class="typeList">
-                <div
-                        :class="currentType == '1' ? 'currentType' : ''"
-                        @click="selectType(1)">盈票供应链研究院
-                </div>
-                <div
-                        :class="currentType == '2' ? 'currentType' : ''"
-                        @click="selectType(2)">大创知服
-                </div>
-                <div
-                        :class="currentType == '3' ? 'currentType' : ''"
-                        @click="selectType(3)">自媒体撰稿人
-                </div>
-            </div>
-        </div>
+
         <div class="boxTable">
             <div class="tables">
                 <ul class="tableT">
                     <li style="width: 5%"></li>
                     <li style="width: 5%">序号</li>
-                    <li style="width: 8%">作者名称</li>
-                    <li style="width: 10%">身份标签</li>
-                    <li style="width: 14%">所属机构</li>
-                    <li style="width: 28%">简介</li>
-                    <li style="width: 12%">已发布文章数</li>
-                    <li style="width: 10%">入驻时间</li>
-                    <li style="width: 10%">操作</li>
+                    <li style="width: 15%">姓名</li>
+                    <li style="width: 10%">手机号码</li>
+                    <li style="width: 11%">QQ</li>
+                    <li style="width: 32%">学校</li>
+                    <li style="width: 10%">发布时间</li>
+                    <li style="width: 12%">操作</li>
                 </ul>
-                <div class="" v-if="authorList != ''">
-                    <ul class="tableC" v-for="(item,index) in authorList">
+                <div class="" v-if="newList != ''">
+                    <ul class="tableC" v-for="(item,index) in newList">
                         <li style="width: 5%">
                             <input type="checkbox" name="" @change="changeBox(item,index)">
                         </li>
                         <li style="width: 5%">{{index + 1}}</li>
-                        <li style="width: 8%">{{item.name}}</li>
-                        <li style="width: 10%">{{item.identity}}</li>
-                        <li style="width: 14%">
-                            {{item.atype == 1?'盈票供应链研究院':item.atype == 2?'大创知服':'自媒体撰稿人'}}
-                        </li>
-                        <li 
-                            style="width: 28%; overflow:hidden;
-            text-overflow:ellipsis;white-space: nowrap;padding:0 5px">{{item.introduce}}</li>
-                        <li style="width: 12%">{{item.remarks}}</li>
-                        <li style="width: 10%">
-                            <!-- {{item.createtime}} <--></-->
-                            {{item.createtime.substring(0,10)}}
-                        </li>
-                        <li style="width: 10%" class="lastLi">
+                        <li style="width: 15%">{{item.name}}</li>
+                        <li style="width: 10%">{{item.phone}}</li>
+                        <li style="width: 11%">{{item.qq}}</li>
+
+                        <li style="width: 32%">{{item.school}}</li>
+                        <li style="width: 10%">{{item.createtime.substr(0,10)}}</li>
+
+                        <li style="width: 12%" class="lastLi">
+                            <!--<span v-if="index == 0"></span>
+                            <span v-else-if="index == 1"></span>
+                            <span v-else-if="index == 2"></span>
+                            <span v-else @click="top(item)">顶置</span>-->
                             <span @click="details(item)">编辑</span>
                             <span @click="delArticle('1',item)">删除</span>
                         </li>
@@ -226,7 +176,7 @@
             </div>
             <div style="display: flex;justify-content: center;margin-top: 20px">
                 <el-pagination
-                        v-if="authorList != '' "
+                        v-if="newList != '' "
                         @current-change="currenPage"
                         background
                         layout="prev, pager, next"
@@ -235,9 +185,9 @@
             </div>
         </div>
     </div>
-    <div class="h70">
+    <!--<div class="h70">
         <iframe class="iframeBox" src="/footer"></iframe>
-    </div>
+    </div>-->
 </div>
 <script>
 
@@ -247,7 +197,7 @@
             currentUser: JSON.parse(localStorage.getItem('userInfo')),
 
             condition: '',
-            authorList: [],
+            newList: [],
             total:1,
             pageNum:1,
             pageSize: 10,
@@ -256,19 +206,13 @@
             currentType: '',
         },
         mounted(){
-             let datas = {
-                id: Storage.get('userInfo'),
-                url: '/author/pagingSel',
-            }
-            let res = postAjax('user/checkShrio',datas,'',this)
-            if(res) {
-                this.getAuthorList(this.pageNum,this.pageSize);
-            }
-           
+
+            this.getNewList(this.pageNum,this.pageSize);
+
         },
         methods: {
             loginOut() { //退出
-                postPromise({},'/signout').then(res => {
+                postPromise({},'/user_info/sign_out').then(res => {
                     localStorage.removeItem("userInfo");
             })
             },
@@ -277,24 +221,18 @@
             },
 
 
-            getAuthorList(pageNum, pageSize,condition, type,date) { //获取作者列表
+            getNewList(pageNum, pageSize,name) { //获取列表
                 let data = {
                     pageNum,
                     pageSize,
-                    condition,
-                    type,
-                    date,
+                    name,
                 }
-                postPromise(data,'author/pagingSel').then(res => {
+                postPromise(data,'enroll/pagingSel').then(res => {
                     if(res.flag == 0) {
                     res.map.pageList.map(item => {
                         item.isChecked = false
                     })
-                    // res.map.pageList.map(item => {
-                    //     console.log(item.createtime)
-                    //     //item.createtime = item.createtime.substring(0,10)
-                    // })
-                    this.authorList = res.map.pageList
+                    this.newList = res.map.pageList
                     this.total = res.number
                 }
             } ,err => {
@@ -302,52 +240,46 @@
                 })
             },
             currenPage(e) { //切换分页
-                this.getAuthorList(e,this.pageSize)
+                this.getNewList(e,this.pageSize)
             },
 
-            delArticle(e,item) { //删除作者
-                 let datas = {
-                    id: Storage.get('userInfo'),
-                    url: '/product/del',
-                }
-                let res = postAjax('user/checkShrio',datas,'',this)
-                if(res) {
-                    let data ={}
-                    if(e == 1) {
-                        data = {
-                            ids: item.id
-                        }
-                    }else if(e ==2) {
-                        data = {
-                            ids: item
-                        }
+            delArticle(e,item) { //删除文章
+                let data ={}
+                if(e == 1) {
+                    data = {
+                        ids: item.id
                     }
-                    postPromise(data,'author/del').then(res => {
-                        if(res.flag == 0) {
-                            if(res.flag == 0) {
-                                this.$message({
-                                    message: '删除成功',
-                                    type: 'success'
-                                });
+                }else if(e ==2) {
+                    data = {
+                        ids: item
+                    }
+                }
+                postPromise(data,'enroll/del').then(res => {
+                    if(res.flag == 0) {
+                    if(res.flag == 0) {
+                        this.$message({
+                            message: '删除成功',
+                            type: 'success'
+                        });
 
-                                setTimeout(() => {
-                                    location.reload();
-                                },1400)
+                        setTimeout(() => {
+                            location.reload();
+                    },1400)
 
-                            }
-                        }
-                    } ,err => {
-                        console.log(err)
-                    })
-                }    
+                    }
+                }
+            } ,err => {
+                    console.log(err)
+                })
             },
+
 
 
 
             allDel() { //多选删除
                 if(this.allId == ''){
                     this.$message({
-                        message: '请选择要删除的作者',
+                        message: '请选择要删除的数据',
                         type: 'warning'
                     });
                     return
@@ -358,9 +290,25 @@
 
 
 
+
+
+            top(item) { // 置顶
+                postPromise({id: item.newsid},'news/roof').then(res => {
+                    if(res.flag == 0) {
+                    this.$message({
+                        message: '置顶成功',
+                        type: 'success'
+                    });
+                    this.getNewList(this.pageNum,this.pageSize);
+                }
+            } ,err => {
+                    console.log(err)
+                })
+
+            },
             selectType(e) { //类型选择
                 this.currentType = e
-                this.getAuthorList(this.pageNum, this.pageSize, this.condition, e,this.datetime)
+                this.getNewList(this.pageNum, this.pageSize, this.condition, e,this.datetime)
             },
 
             changeBox(e,index) { //复选框
@@ -373,20 +321,16 @@
                 }
             },
 
-            addAuthor() {// 新建文章
-                // window.location.href = '/addAuthor';
-                let datas = {
-                    id: Storage.get('userInfo'),
-                    url: '/addAuthor',
-                }
-                postAjax('user/checkShrio',datas,'/addAuthor',this)
+            addNews() {// 新建文章
+                window.location.href = '/addAuthor';
             },
 
             search() { // 搜素
-                this.getAuthorList(this.pageNum, this.pageSize, this.condition, this.currentType,this.datetime)
+                this.getNewList(this.pageNum, this.pageSize,this.condition)
             }
+        },
 
-        }
+
 
     })
 

@@ -40,15 +40,15 @@
   <body>
     <div class="" id="login">
         <div style="padding-left: 50px;display: flex;align-items: center;padding-top: 20px;background: #567086">
-          <img src="../../static/img/tupian1.png">
-          <span style="font-size: 22px;color: #fff;margin-left: 20px;font-weight: 700">盈票服务号管理</span>
+          <img src="">
+          <span style="font-size: 22px;color: #fff;margin-left: 20px;font-weight: 700">勤工俭学服务号管理</span>
         </div>
       <div class="row">
         <div class="col-12 mx-auto tm-login-col">
           <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
             <div class="row">
               <div class="col-12 text-center">
-                <h2 class="tm-block-title mb-4">欢迎登陆盈票服务号管理后台</h2>
+                <h2 class="tm-block-title mb-4">欢迎登陆勤工俭学服务号后台</h2>
               </div>
             </div>
             <div class="row mt-2">
@@ -57,8 +57,8 @@
                   <div class="form-group">
                     <!-- <label for="username">用户名</label> -->
                     <input
-                      v-model="userName"
-                      placeholder="请输入手机号码"
+                      v-model="name"
+                      placeholder="请输入用户名"
                       type="text"
                       class="form-controls"
                       required
@@ -67,24 +67,13 @@
                   <div class="form-group mt-3" style="position: relative;">
                     <!-- <label for="password">密码</label> -->
                     <input
-                      v-model="userPW"
-                       placeholder="请输入验证码"
+                      v-model="password"
+                       placeholder="请输入密码"
                       type="text"
                       class="form-controls"
                       required
                     />
-                    <button  
-                       v-if="isTime"
-                      @click="setCode"
-                      class="btn btn-primary " 
-                      style="position: absolute;top:0;right: 0;height:100%;background: #169bd5;color: #fff;border: none;outline: none;">发送验证码
-                    </button>
-                     <button  
 
-                      v-else
-                      class="btn btn-primary " 
-                      style="position: absolute;top:0;right: 0;height:100%;background: #169bd5;color:#fff;border: none;outline: none">{{time}}秒后重新获取
-                    </button>
                   </div>
                   <div id="c1" style="width: 100%"></div>
                   <div class="form-group mt-4">
@@ -110,8 +99,8 @@
   let login = new Vue({
     el: '#login',
     data: {
-        userName: '',
-        userPW: '',
+        name: '',
+        password: '',
         ifShow: false,
         token: '',
         time: '60',
@@ -129,17 +118,17 @@
           });
        }else {
         let data = {
-          phone: this.userName,
-          code: this.userPW
+          name: this.name,
+          password: this.password
         }
-        postPromise(data,'user/check').then(res => {
+        postPromise(data,'user_info/check').then(res => {
          if(res.flag == 0) {
           localStorage.setItem("userInfo", JSON.stringify(res.map.session_user));
           location.replace('/newsList')
           //window.location.href='/index';
          }else {
           this.$message({
-            message: '输入正确的验证码',
+            message: '输入正确的密码',
             type: 'warning'
           });
          }
