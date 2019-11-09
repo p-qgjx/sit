@@ -21,8 +21,8 @@
         [v-cloak]{
             display:none
         }
-        #editor{
-            margin-bottom:20px;
+        #editor, #editor2 {
+            margin: 10px 0 20px;
             width: 100%;
             background: #fff;
         }
@@ -149,27 +149,29 @@
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-12 ml120">
                             <form action="" class="tm-edit-product-form">
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >企业名称
-                                    </label>
-                                    <input
-                                            v-model="from.name"
-                                            type="text"
-                                            class="form-contro"
-                                    />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="description"
-                                    >城市</label
-                                    >
-                                    <select class="custom-selectt" v-model="from.city">
-                                        <option v-for="(item,index) in author" :value="item.id">{{item.cityname}}</option>
-                                    </select>
-
-
+                                <div class="col-xl-6 col-lg-6 col-md-12 ml120">
+                                    <div class="form-group mb-3">
+                                        <label
+                                                for="name"
+                                        >企业名称
+                                        </label>
+                                        <input
+                                                v-model="from.name"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label
+                                                for="description"
+                                        >城市</label
+                                        >
+                                        <select class="custom-selectt" v-model="from.city">
+                                            <option v-for="(item,index) in author" :value="item.id">{{item.cityname}}</option>
+                                        </select>
+    
+    
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label
