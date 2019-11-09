@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>勤工助学官网</title>
+    <!-- <link rel="stylesheet" href="../../static/css/common.css"> -->
+    <link rel="stylesheet" href="../../static/css/index.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+</head>
+
+<body>
+    <div>
+        <div class="menu_main">
+            <div class="menu-a-left"> <a href="./index.html"><img src="../../static/images/logo.png" class="menu_back" alt="勤工助学官网" /></a>
+            </div>
+            <!-- <div class="menu-a-center"> <span id="">大学生寒暑假找工作首选品牌</span></div> -->
+            <div class="menu-a-right">
+                <a href="./addr.html">城市</a>
+            </div>
+        </div>
+        
+        <!--banner图-->
+        <div class="slideBox swiper-container">
+            <div class="swiper-wrapper"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!--导航菜单-->
+        <div class="index_menu clearfix">
+            <a class="nav" href="javascript:;" data-index="1">
+                <img src="../../static/images/all_enterprise.png" class="menu_img" />
+                <div class="menu_title">寒假工</div>
+            </a>
+            <a class="nav" href="javascript:;" data-index="2">
+                <img src="../../static/images/daily_job.png" class="menu_img" />
+                <div class="menu_title">单招生</div>
+            </a>
+            <a class="nav" href="javascript:;" data-index="3">
+                <img src="../../static/images/Recommended.png" class="menu_img" />
+                <div class="menu_title">暑假工</div>
+            </a>
+            <a class="nav" href="javascript:;" data-index="4">
+                <img src="../../static/images/news.png" class="menu_img" />
+                <div class="menu_title">大学生兼职</div>
+            </a>
+        </div>
+        <!-- 热门推荐 -->
+        <div class="index_body" id="main_enterprise">
+            <div class="body_title">热门推荐</div>
+            <div class="body_ent">
+                
+            </div>
+        </div>
+        <!-- more -->
+        <div class="body_more1">
+            <a href="javascript:;" onclick="more()">更多企业 ></a>
+        </div>
+        <div class="clear"></div>
+        <!-- footer -->
+        <div class="footet-wrapper">
+            <div class="footer">
+                <div class="tel textl">
+                    <a href="tel:15270292407">15270292407</a>
+                </div>
+                <p class="words">*拨打热线电话，客服免费帮你找工作*</p>
+                <p class="words">关注公众号：勤工助学官网</p>
+                <p class="copyright">赣ICP备14019223号-1 Copyright 勤工助学官网</p>
+            </div>
+        </div>
+    </div>
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"> </script>
+    <script>
+        $(function () {
+            // 获取首页推荐数据
+            getIndexList(1, 1)
+            // 获取轮播图
+            getBannerList()
+
+            $('.nav').on('click', function () {
+                console.log($(this).attr('data-index'))
+                let index = $(this).attr('data-index')
+                $('.body_ent').html('')
+                getIndexList(index, 1)
+            })
+
+            var mySwiper = new Swiper('.swiper-container', {
+                autoplay: true,//可选选项，自动滑动
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            })
+        })
+        let baseUrl = 'http://xingyikeji.natapp1.cc'
+        let indexType = 0
+        let pageNum = 1
+        let total = 0
+        function getIndexList (type, pageNum) {
+            indexType = type
+            $.ajax({
+                url: baseUrl + '/work/pagingSel',
+                methods: 'GET',
+                data: {
+                    pageNum,
+                    pageSize: 5,
+                    type
+                },
+                success: function (res) {
+                    console.log(res)
+                    let dataList = res.map.pageList
+                    let str = ''
+                    total = Math.ceil(res.number / 5)
+                    if (total <= pageNum) {
+                        $('.body_more1').hide()
+                    }
+                    for (let i = 0; i < dataList.length; i++) {
+                        let sex = ''
+                        if (dataList[i].sex == 1) {
+                            sex = '仅限男'
+                        } else if (dataList[i].sex == 2) {
+                            sex = '仅限女'
+                        } else {
+                            sex = '男女不限'
+                        }
+                        str += '<a href="javascript:;" class="clearfix item" data-id="' + dataList[i].id + '"><div class="ent_img float_left"><div class="img_hot"><img src="../../static/images/hot.png"></div><img src="' + dataList[i].thumbnail + '" class="main_img"></div><div class="ent_info float_right"><div class="ent_title">' + dataList[i].name + '</div><div class="ent_tags">' + sex + '&nbsp;' + dataList[i].worktype + '&nbsp;' + dataList[i].age + '周岁&nbsp;</div><div class="ent_wage float_left"><span>' + dataList[i].wages + '</span>元</div><div class="ent_count float_right">已报名：' + dataList[i].number + '人</div></div></a>'
+                    }
+
+                    $('.body_ent').append(str)
+
+                    // 进入详情
+                    $('.item').on('click', function () {
+                        let id = $(this).attr('data-id')
+                        window.location.href = './info.html?id=' + id
+                    })
+                }
+            })
+        }
+
+        
+        function getBannerList () {
+            $.ajax({
+                url: baseUrl + '/banner/selAll',
+                methods: 'GET',
+                success: function (res) {
+                    console.log(res)
+                    let bannerList = res.map.list
+                    let str = ''
+                    for (let i = 0; i < bannerList.length; i++) {
+                        str += '<div class="swiper-slide"><a href="#" target="_blank"><img src="' + bannerList[i].url + '" /></a></div>'
+                    }
+
+                    $('.swiper-wrapper').append(str)
+                }
+            })
+        }
+
+        function more() {
+            if (pageNum < total) {
+                pageNum++
+                getIndexList(indexType, pageNum)
+            }
+        }
+    </script>
+</body>
+
+</html>

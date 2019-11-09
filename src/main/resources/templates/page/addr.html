@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>勤工助学官网</title>
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" href="../../static/css/index.css">
+</head>
+
+<body>
+    <div class="menu_main">
+        <div class="menu-a-left"> <a href="./index.html"><img src="../../static/images/logo.png" class="menu_back" alt="勤工助学官网" /></a>
+        </div>
+        <!-- <div class="menu-a-center"> <span id="">大学生寒暑假找工作首选品牌</span></div> -->
+        <div class="menu-a-right">
+            <a href="./addr.html">城市</a>
+        </div>
+    </div>
+    <!--导航菜单-->
+    <div class="scity">
+        <h4> 请选择城市找工作</h4>
+        <section>
+            <a href="javascript:;" data-id="0" class="changefieldandcss city">全国</a>
+        </section>
+    </div>
+
+    <div class="index_body">
+        <div class="body_ent"></div>
+    </div>
+    <!-- more -->
+    <div class="body_more1">
+        <a href="javascript:;" onclick="more()">更多企业 ></a>
+    </div>
+  
+    <div id="xuzhi" class="xuzhi"> <a href="#">勤工助学官网求职保障服务须知</a>
+        <h4> 温馨提示！</h4>
+        <p> “勤工助学官网”上所有的企业，均是经过实地考察100%真实工作的知名企业，请放心报名!如果遇到假冒企业、黑中介及招聘诈骗电话， 请及时拨打官方客服电话进行举报。
+        郑重声明：如有在路途或者安置过程中由于个人原因不听平台劝导，最后跟着其他个人中介或者劳务公司进厂的，不再归平台负责，本平台概不承担后续任何法律或者连带责任，请知悉。</p>
+    </div>
+    <!-- footer -->
+    <div class="footet-wrapper">
+        <div class="footer">
+            <div class="tel textl">
+                <a href="tel:15270292407">15270292407</a>
+            </div>
+            <p class="words">*拨打热线电话，客服免费帮你找工作*</p>
+            <p class="words">关注公众号：勤工助学官网</p>
+            <p class="copyright">赣ICP备14019223号-1 Copyright 勤工助学官网</p>
+        </div>
+    </div>
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(function () {
+            // 获取城市
+            getCitys()
+            $('.body_more1').hide()
+        })
+        let baseUrl = 'http://xingyikeji.natapp1.cc'
+        let indexId = 0
+        let pageNum = 1
+        let total = 0
+        function getCitys() {
+            $.ajax({
+                url: baseUrl + '/city/sel',
+                methods: 'GET',
+                success: function (res) {
+                    let str = ''
+                    let citysList = res.map.list
+                    for (let i = 0; i < citysList.length; i++) {
+                        str += '<a href="javascript:;" class="city" data-id="' + citysList[i].id + '">' + citysList[i].cityname + '</a>'
+                    }
+                    $('.scity section').append(str)
+                    // 选择城市
+                    $('.city').on('click', function() {
+                        $('.body_ent').html('')
+                        let id = $(this).attr('data-id')
+                        getList(id, 1)
+                    })
+                }
+            })
+        }
+        
+        // 根据城市id获取公司列表
+        function getList(id, pageNum) {
+            indexId = id
+            $.ajax({
+                url: baseUrl + '/work/pagingSel',
+                methods: 'GET',
+                data: {
+                    pageNum,
+                    pageSize: 20,
+                    city: id,
+                },
+                success: function (res) {
+                    console.log(res)
+                    let dataList = res.map.pageList
+                    let str = ''
+                    total = Math.ceil(res.number / 20)
+                    if (total <= pageNum) {
+                        $('.body_more1').hide()
+                    }
+                    for (let i = 0; i < dataList.length; i++) {
+                        let sex = ''
+                        if (dataList[i].sex == 0) {
+                            sex = '仅限男'
+                        } else if (dataList[i].sex == 1) {
+                            sex = '仅限女'
+                        } else {
+                            sex = '男女不限'
+                        }
+                        str += '<a href="javascript:;" class="clearfix item" data-id="' + dataList[i].id + '"><div class="ent_img float_left"><div class="img_hot"><img src="../../static/images/hot.png"></div><img src="' + dataList[i].thumbnail + '" class="main_img"></div><div class="ent_info float_right"><div class="ent_title">' + dataList[i].name + '</div><div class="ent_tags">' + sex + '&nbsp;' + dataList[i].worktype + '&nbsp;' + dataList[i].age + '周岁&nbsp;</div><div class="ent_wage float_left"><span>' + dataList[i].wages + '</span>元</div><div class="ent_count float_right">已报名：' + dataList[i].number + '人</div></div></a>'
+                    }
+                    $('.body_ent').append(str)
+
+                    // 进入详情
+                    $('.item').on('click', function () {
+                        let id = $(this).attr('data-id')
+                        window.location.href = './info.html?id=' + id
+                    })
+                }
+            })
+        }
+
+        function more() {
+            if (pageNum < total) {
+                pageNum++
+                getList(indexType, pageNum)
+            }
+        }
+    </script>
+</body>
+
+</html>

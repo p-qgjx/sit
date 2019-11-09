@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>勤工助学官网</title>
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" href="../../static/css/index.css">
+</head>
+
+<body>
+    <div class="menu_main">
+        <div class="menu-a-left"> <a href="./index.html"><img src="../../static/images/logo.png" class="menu_back" alt="勤工助学官网" /></a>
+        </div>
+        <!-- <div class="menu-a-center"> <span id="">大学生寒暑假找工作首选品牌</span></div> -->
+        <div class="menu-a-right">
+            <a href="./addr.html">城市</a>
+        </div>
+    </div>
+
+    <div class="ent_name clearfix" style="width:100%; height:68px;">
+        <div class="float_left" style="width:60%;overflow:hidden">
+          <div class="ent_title"> <span class="name"></span></div>
+          <div class="ent_price"> <span class="price"></span>元</div>
+        </div>
+        <div class="float_right ent_employ" style="width:38%;overflow:hidden"> <a href="./sign.html" id="submit_employ">免&nbsp;费&nbsp;报&nbsp;名</a> </div>
+    </div>
+    <div id="ctl00_ContentPlaceHolder1_ent_tags" class="ent_tags clearfix"></div>
+    <div class="ent_butie" id="ent_more_price">
+        <table class="ent_table" cellspacing="0" cellpadding="0">
+          <tr>
+            <td rowspan="2">领补贴</td>
+            <td>交通费</td>
+            <td>体检费</td>
+            <td class="no_border_r">生活费</td>
+          </tr>
+          <tr>
+            <td><span id="ctl00_ContentPlaceHolder1_LabelJiaotong">x</span></td>
+            <td><span id="ctl00_ContentPlaceHolder1_LabelTijian">x</span></td>
+            <td class="no_border_r"><span id="ctl00_ContentPlaceHolder1_LabelShenghuo">x</span></td>
+          </tr>
+          <tr>
+            <td class="no_border_b">推荐费</td>
+            <td class="no_border_b no_border_r" colspan="3"><span id="ctl00_ContentPlaceHolder1_LabelTuijian">x</span></td>
+          </tr>
+        </table>
+        <div id="ent_more_info"></div>
+    </div>
+    <article class="news-detail">
+        <div>
+            <div class="box_title">招聘简章</div>
+            <section class="content">
+                <div class="jobxq_con zpjz"></div>
+            </section>
+        </div>
+        <div style="margin-top:15px;">
+            <div class="box_title">企业介绍</div>
+            <section class="content">
+              <div class="jobxq_con about"></div>
+            </section>
+        </div>
+    </article>
+    <!-- footer -->
+    <div class="footet-wrapper">
+        <div class="footer">
+            <div class="tel textl">
+                <a href="tel:15270292407">15270292407</a>
+            </div>
+            <p class="words">*拨打热线电话，客服免费帮你找工作*</p>
+            <p class="words">关注公众号：勤工助学官网</p>
+            <p class="copyright">赣ICP备14019223号-1 Copyright 勤工助学官网</p>
+        </div>
+    </div>
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(function () {
+            let id = getUrlParam('id')
+            console.log(id)
+            getDetail(id)
+        })
+        let baseUrl = 'http://xingyikeji.natapp1.cc'
+        
+        // 获取地址栏参数
+        function getUrlParam(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r!=null) return unescape(r[2]); return null; //返回参数值
+        }
+
+        // 获取详细信息
+        function getDetail (id) {
+            $.ajax({
+                url: baseUrl + '/work/selById',
+                methods: 'GET',
+                data: {
+                    id
+                },
+                success: function (res) {
+                    console.log(res)
+                    let data = res.map.workWithBLOBs
+                    $('.name').html(data.name)
+                    $('.price').html(data.wages)
+                    var sex = ''
+                    if (data.sex == 1) {
+                        sex = '仅限男'
+                    } else if (data.sex == 2) {
+                        sex = '仅限女'
+                    } else {
+                        sex = '男女不限'
+                    }
+                    var str = '<span>' + data.worktype + '</span>|<span">' + sex + '</span>|<span>' + data.age + '周岁</span>|<span>招聘：' + data.number + '人</span>'
+                    $('.ent_tags').html(str)
+                    $('#ctl00_ContentPlaceHolder1_LabelJiaotong').html(data.jtf)
+                    $('#ctl00_ContentPlaceHolder1_LabelTijian').html(data.tjf)
+                    $('#ctl00_ContentPlaceHolder1_LabelShenghuo').html(data.shf)
+                    $('#ctl00_ContentPlaceHolder1_LabelTuijian').html(data.recommend)
+                    $('.zpjz').html(data.information)
+                    $('.about').html(data.aboutus)
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
