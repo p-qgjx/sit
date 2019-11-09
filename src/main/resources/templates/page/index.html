@@ -86,12 +86,7 @@
                 getIndexList(index, 1)
             })
 
-            var mySwiper = new Swiper('.swiper-container', {
-                autoplay: true,//可选选项，自动滑动
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-            })
+            
         })
         let baseUrl = 'http://xingyikeji.natapp1.cc'
         let indexType = 0
@@ -148,10 +143,17 @@
                     let bannerList = res.map.list
                     let str = ''
                     for (let i = 0; i < bannerList.length; i++) {
-                        str += '<div class="swiper-slide"><a href="#" target="_blank"><img src="' + bannerList[i].url + '" /></a></div>'
+                        str += '<div class="swiper-slide"><a href="' + bannerList[i].address + '" target="_blank"><img src="' + bannerList[i].url + '" /></a></div>'
                     }
 
                     $('.swiper-wrapper').append(str)
+					var mySwiper = new Swiper('.swiper-container', {
+						autoplay: true,//可选选项，自动滑动
+						loop: true,
+						pagination: {
+							el: '.swiper-pagination',
+						},
+					})
                 }
             })
         }
