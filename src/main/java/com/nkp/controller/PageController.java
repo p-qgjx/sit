@@ -13,10 +13,6 @@ public class PageController {
         return "admin/login";
     }
 
-    @RequestMapping("/index")//首页
-    public String index(){
-        return "admin/index";
-    }
 
 
     @RequestMapping("/userList")//用户信息列表
@@ -189,6 +185,29 @@ public class PageController {
     public String footer(){
         return "admin/footer";
     }
+
+
+    @RequestMapping("/index")
+    public String index(){
+        return "page/index";
+    }
+
+    @RequestMapping("/addr")
+    public String addr(){
+        return "page/addr";
+    }
+
+    @RequestMapping("/sign")
+    public String sign(){
+        return "page/sign";
+    }
+
+    @RequestMapping("/info")
+    public String info(){
+        return "page/info";
+    }
+
+
 
 
 
