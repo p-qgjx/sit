@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -80,274 +81,222 @@
         }
     </style>
 </head>
+
 <body>
-<div id="app" v-cloak>
+    <div id="app" v-cloak>
 
-    <nav class="navbar navbar-expand-xl">
-        <div class="container h-100">
-            <img src="../../static/img/logo.png">
-            <a class="navbar-brand" href="javascript:;">
-                <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
-            </a>
-            <button
-                    class="navbar-toggler ml-auto mr-0"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars tm-nav-icon"></i>
-            </button>
+        <nav class="navbar navbar-expand-xl">
+            <div class="container h-100">
+                <img src="../../static/img/logo.png">
+                <a class="navbar-brand" href="javascript:;">
+                    <h1 class="tm-site-title mb-0">&nbsp&nbsp勤工助学直通车服务号管理</h1>
+                </a>
+                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars tm-nav-icon"></i>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto h-100">
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/newsList"
-                        >
-                            <img class="titleIcon" src="../../static/img/wenzhang.png">
-                            <span>招聘</span>
-                        </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto h-100">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/newsList">
+                                <img class="titleIcon" src="../../static/img/wenzhang.png">
+                                <span>招聘</span>
+                            </a>
 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/authorList"
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/authorList">
+                                <img class="titleIcon" src="../../static/img/zuozhe.png">
+                                <span>报名</span>
+                            </a>
 
-                        >
-                            <img class="titleIcon" src="../../static/img/zuozhe.png">
-                            <span>报名</span>
-                        </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/activityList">
+                                <img class="titleIcon" src="../../static/img/huodong.png">
+                                <span>Banner</span>
+                            </a>
 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/activityList"
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/productList">
+                                <img class="titleIcon" src="../../static/img/chanpin.png">
+                                <span>城市</span>
+                            </a>
 
-                        >
-                            <img class="titleIcon" src="../../static/img/huodong.png">
-                            <span>Banner</span>
-                        </a>
+                        </li>
 
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                                class="nav-link dropdown-toggle"
-                                href="/productList"
-
-                        >
-                            <img class="titleIcon" src="../../static/img/chanpin.png">
-                            <span>城市</span>
-                        </a>
-
-                    </li>
-
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link d-block" href="/signout" @click="loginOut">
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="/signout" @click="loginOut">
 
 
-                            <span>{{currentUser.username}}</span>
-                            <span class="out">退出</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container tm-mt-big tm-mb-big">
-        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-            <div class="row currentWzhi">
-                <div class="col-12">
-                    <span class="weizhi">您的位置:</span>
-                    <span class="subweizhi">作者/新增报名</span>
+                                <span>{{currentUser.username}}</span>
+                                <span class="out">退出</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="weizhiLine"></div>
-            <div class="row">
-                <!-- <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto"> -->
-                <div class="mx-auto">
-                    <div class="row tm-edit-product-row">
+        </nav>
 
-                        <div class="col-xl-6 col-lg-6 col-md-12 ml120">
-                            <form action="" class="tm-edit-product-form">
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >您的姓名
+        <div class="container tm-mt-big tm-mb-big">
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row currentWzhi">
+                    <div class="col-12">
+                        <span class="weizhi">您的位置:</span>
+                        <span class="subweizhi">作者/新增报名</span>
+                    </div>
+                </div>
+                <div class="weizhiLine"></div>
+                <div class="row">
+                    <!-- <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto"> -->
+
+                    <div class="row">
+
+                        <form action="" class="tm-edit-product-form">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="name">您的姓名
                                     </label>
-                                    <input
-                                            v-model="from.name"
-                                            type="text"
-                                            class="form-contro"
-
-                                    />
+                                    <input v-model="from.name" type="text" class="form-contro" />
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="description"
-                                    >性别</label
-                                    >
+                                <div class="col-6">
+                                    <label for="description">性别</label>
 
                                     <select class="custom-selectt" v-model="from.sex">
-                                        <option value="1" >男</option>
+                                        <option value="1">男</option>
                                         <option value="2">女</option>
                                     </select>
                                 </div>
-
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="category"
-                                    >手机号码</label
-                                    >
-                                    <input
-                                            v-model="from.phone"
-                                            type="text"
-                                            class="form-contro"
-
-                                    />
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="category">手机号码</label>
+                                    <input v-model="from.phone" type="text" class="form-contro" />
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="category"
-                                    >QQ</label
-                                    >
-                                    <input
-                                            v-model="from.qq"
-                                            type="text"
-                                            class="form-contro"
-
-                                    />
+                                <div class="col-6">
+                                    <label for="category">QQ</label>
+                                    <input v-model="from.qq" type="text" class="form-contro" />
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="category"
-                                    >学校</label
-                                    >
-                                    <input
-                                            v-model="from.school"
-                                            type="text"
-                                            class="form-contro"
-
-                                    />
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="category">学校</label>
+                                    <input v-model="from.school" type="text" class="form-contro" />
                                 </div>
-                        </div>
-
-
+                            </div>
+                        </form>
                         <div class="funBao">
                             <button class="btn backs" @click="goBack">返回</button>
                             <button class="btn baocun" @click="saveArticles">保存</button>
                         </div>
-                        </form>
+
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
-    <!--<div class="h70">
+        <!--<div class="h70">
         <iframe class="iframeBox" src="/footer"></iframe>
     </div>-->
-</div>
-<script>
+    </div>
+    <script>
 
-    let app = new Vue({
-        el: '#app',
-        data: {
-            currentUser: JSON.parse(localStorage.getItem('userInfo')),
-            articleType: [],
-            from: {
-                name : '',
-                sex:1,
-                phone: '',
-                qq: '',
-                school:'',
+        let app = new Vue({
+            el: '#app',
+            data: {
+                currentUser: JSON.parse(localStorage.getItem('userInfo')),
+                articleType: [],
+                from: {
+                    name: '',
+                    sex: 1,
+                    phone: '',
+                    qq: '',
+                    school: '',
+                },
+
+
+
             },
+            mounted() {
 
-
-            
-        },
-        mounted() {
-
-        },
-        methods: {
-
-            loginOut() { //退出
-                postPromise({},'/user_info/sign_out').then(res => {
-                    localStorage.removeItem("userInfo");
-            })
             },
+            methods: {
 
-            addImg(e) { //上传封面图片
-                let formData = new FormData();
-                formData.append('file',e.target.files[0]);
-                upFile(formData,'uplode/image').then(res => {
-                    this.from.headpicture = res
-                }, err => {
-                    console.log(err)
-                })
-            },
+                loginOut() { //退出
+                    postPromise({}, '/user_info/sign_out').then(res => {
+                        localStorage.removeItem("userInfo");
+                    })
+                },
+
+                addImg(e) { //上传封面图片
+                    let formData = new FormData();
+                    formData.append('file', e.target.files[0]);
+                    upFile(formData, 'uplode/image').then(res => {
+                        this.from.headpicture = res
+                    }, err => {
+                        console.log(err)
+                    })
+                },
 
 
-            saveArticles() { //保存作者
-                // this.from.id = this.getQueryStringRegExp('id');
-                /*this.from.jsonParam.map((item) => {
-                    item.subChecked.map((subItem) => {
-                        if(subItem.isChecked){
-                            subItem.isChecked = subItem.num
-                        }else {
-                             subItem.isChecked = 0
+                saveArticles() { //保存作者
+                    // this.from.id = this.getQueryStringRegExp('id');
+                    /*this.from.jsonParam.map((item) => {
+                        item.subChecked.map((subItem) => {
+                            if(subItem.isChecked){
+                                subItem.isChecked = subItem.num
+                            }else {
+                                 subItem.isChecked = 0
+                            }
+                        })
+                    })*/
+                    // console.log(this.from)
+                    // delete this.from.creattime
+                    // delete this.from.explain
+
+                    postPromise(this.from, 'enroll/add').then(res => {
+                        if (res.flag == 0) {
+                            this.$message({
+                                message: '保存成功',
+                                type: 'success'
+                            });
+                            setTimeout(() => {
+                                this.goBack();
+                            }, 1400);
                         }
+                    }, err => {
+                        console.log(err)
                     })
-                })*/
-                // console.log(this.from)
-                // delete this.from.creattime
-                // delete this.from.explain
+                },
 
-                postPromise(this.from,'enroll/add').then(res => {
-                    if(res.flag == 0) {
-                    this.$message({
-                        message: '保存成功',
-                        type: 'success'
-                    });
-                    setTimeout(() => {
-                        this.goBack();
-                },1400);
+                changeAll(item, index) { //全选与全不选
+                    item.isAllElection = !item.isAllElection;
+                    if (item.isAllElection) {
+                        item.subChecked.map(item => {
+                            item.isChecked = true
+                        })
+                    } else {
+                        item.subChecked.map(item => {
+                            item.isChecked = false
+                        })
+                    }
+                },
+
+                singleChecked(list, idx, item) { //单个选择复选框
+                    list.isChecked = !list.isChecked
+                    console.log(item.subChecked)
+                },
+
+                goBack() {
+                    location.replace('/authorList');
                 }
-            } ,err => {
-                    console.log(err)
-                })
-            },
-
-            changeAll(item,index) { //全选与全不选
-                item.isAllElection = !item.isAllElection;
-                if(item.isAllElection) {
-                    item.subChecked.map(item => {
-                        item.isChecked = true
-                    })
-                }else {
-                     item.subChecked.map(item => {
-                        item.isChecked = false
-                    })
-                }
-            },
-
-            singleChecked(list,idx,item) { //单个选择复选框
-                list.isChecked = !list.isChecked
-                console.log(item.subChecked)
-            },
-
-            goBack() {
-                location.replace('/authorList');
             }
-        }
-    })
-</script>
+        })
+    </script>
 </body>
+
 </html>
