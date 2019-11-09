@@ -149,8 +149,8 @@
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-12 ml120">
                             <form action="" class="tm-edit-product-form">
-                                <div class="col-xl-6 col-lg-6 col-md-12 ml120">
-                                    <div class="form-group mb-3">
+                                <div class="row">
+                                    <div class="form-group col-6">
                                         <label
                                                 for="name"
                                         >企业名称
@@ -161,7 +161,7 @@
                                                 class="form-contro"
                                         />
                                     </div>
-                                    <div class="form-group mb-3">
+                                    <div class="form-group col-6">
                                         <label
                                                 for="description"
                                         >城市</label
@@ -169,132 +169,142 @@
                                         <select class="custom-selectt" v-model="from.city">
                                             <option v-for="(item,index) in author" :value="item.id">{{item.cityname}}</option>
                                         </select>
-    
-    
                                     </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="category"
-                                    >类型</label
-                                    >
-                                    <select class="custom-selectt" v-model="from.type">
-                                        <option value="1" >寒假工</option>
-                                        <option value="2">单招生</option>
-                                        <option value="3">暑假工</option>
-                                        <option value="3">大学生兼职</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="category"
+                                        >类型</label
+                                        >
+                                        <select class="custom-selectt" v-model="from.type">
+                                            <option value="1" >寒假工</option>
+                                            <option value="2">单招生</option>
+                                            <option value="3">暑假工</option>
+                                            <option value="3">大学生兼职</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >工种
+                                        </label>
+                                        <input
+                                                v-model="from.worktype"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
                                 </div>
-
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >工种
-                                    </label>
-                                    <input
-                                            v-model="from.worktype"
-                                            type="text"
-                                            class="form-contro"
-                                    />
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="category"
+                                        >性别</label
+                                        >
+                                        <select class="custom-selectt" v-model="from.sex">
+                                            <option value="1" >男</option>
+                                            <option value="2">女</option>
+                                            <option value="3">不限</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >年龄区间
+                                        </label>
+                                        <input
+                                                v-model="from.age"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="category"
-                                    >性别</label
-                                    >
-                                    <select class="custom-selectt" v-model="from.sex">
-                                        <option value="1" >男</option>
-                                        <option value="2">女</option>
-                                        <option value="3">不限</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >招聘人数
+                                        </label>
+                                        <input
+                                                v-model="from.number"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >工资
+                                        </label>
+                                        <input
+                                                v-model="from.wages"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >年龄区间
-                                    </label>
-                                    <input
-                                            v-model="from.age"
-                                            type="text"
-                                            class="form-contro"
-                                    />
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >交通费
+                                        </label>
+                                        <input
+                                                v-model="from.jtf"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >体检费
+                                        </label>
+                                        <input
+                                                v-model="from.tjf"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >招聘人数
-                                    </label>
-                                    <input
-                                            v-model="from.number"
-                                            type="text"
-                                            class="form-contro"
-                                    />
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >生活费
+                                        </label>
+                                        <input
+                                                v-model="from.shf"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >推荐费
+                                        </label>
+                                        <input
+                                                v-model="from.recommend"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >工资
-                                    </label>
-                                    <input
-                                            v-model="from.wages"
-                                            type="text"
-                                            class="form-contro"
-                                    />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >交通费
-                                    </label>
-                                    <input
-                                            v-model="from.jtf"
-                                            type="text"
-                                            class="form-contro"
-                                    />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >体检费
-                                    </label>
-                                    <input
-                                            v-model="from.tjf"
-                                            type="text"
-                                            class="form-contro"
-                                    />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >生活费
-                                    </label>
-                                    <input
-                                            v-model="from.shf"
-                                            type="text"
-                                            class="form-contro"
-                                    />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >推荐费
-                                    </label>
-                                    <input
-                                            v-model="from.recommend"
-                                            type="text"
-                                            class="form-contro"
-                                    />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label
-                                            for="name"
-                                    >已报名人数
-                                    </label>
-                                    <input
-                                            v-model="from.ennum"
-                                            type="text"
-                                            class="form-contro"
-                                    />
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label
+                                                for="name"
+                                        >已报名人数
+                                        </label>
+                                        <input
+                                                v-model="from.ennum"
+                                                type="text"
+                                                class="form-contro"
+                                        />
+                                    </div>
                                 </div>
 
 

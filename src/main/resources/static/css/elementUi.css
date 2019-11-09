@@ -106,9 +106,9 @@ input[type="checkbox"]{
 }
 .listFun{
 	width: 100%;
-	height: 60px;
 	background: #fff;
-	padding: 0 15px;
+    padding: 20px 15px;
+    box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
