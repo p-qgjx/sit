@@ -176,6 +176,9 @@
             <div>
                 <div class="delBtn" @click="allDel">批量删除</div>
             </div>
+            <div>
+                <div class="delBtn" @click="daochu">导出</div>
+            </div>
             <div style="display: flex;justify-content: center;margin-top: 20px">
                 <el-pagination
                         v-if="newList != '' "
@@ -288,6 +291,20 @@
                 }
                 this.delArticle('2',this.allId.join(','))
                 this.allId = []
+            },
+            daochu(){
+                postPromise({},'enroll/dc').then(res => {
+                    if(res.flag == 0) {
+                    this.$message({
+                        message: '导出成功，请在桌面查看',
+                        type: 'success'
+                    });
+
+                }
+            } ,err => {
+                    console.log(err)
+                })
+
             },
 
 
