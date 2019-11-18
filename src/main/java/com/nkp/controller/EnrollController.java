@@ -3,10 +3,13 @@ package com.nkp.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nkp.config.utils.DataPackJSON;
+import com.nkp.config.utils.ExcelData;
+import com.nkp.config.utils.ExcelUtils;
 import com.nkp.config.utils.NewDateTime;
 import com.nkp.dao.EnrollMapper;
 import com.nkp.dao.WorkMapper;
 import com.nkp.pojo.Enroll;
+import com.nkp.pojo.UserInfo;
 import com.nkp.pojo.Work;
 import com.nkp.pojo.WorkWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping("/enroll")
@@ -121,6 +123,73 @@ public class EnrollController {
         dataPackJSON.setFlag(0);
         dataPackJSON.setMsg("SUCCESS");
         return dataPackJSON;
+
+    }
+
+    @RequestMapping("/dc")
+
+    public void dc(HttpServletResponse response){
+
+        int rowIndex = 0;
+
+        List<Enroll> list = enrollMapper.selAll();
+
+        ExcelData data = new ExcelData();
+
+        data.setName("sign");
+
+        List<String> titles = new ArrayList();
+
+        titles.add("编号");
+
+        titles.add("姓名");
+
+        titles.add("性别");
+        titles.add("手机号码");
+        titles.add("QQ");
+        titles.add("学校");
+        titles.add("报名备注");
+        titles.add("报名时间");
+
+        data.setTitles(titles);
+
+
+
+        List<List<Object>> rows = new ArrayList();
+
+        for(int i = 0, length = list.size();i<length;i++){
+
+            Enroll enroll = list.get(i);
+
+            List<Object> row = new ArrayList();
+
+            row.add(enroll.getId());
+
+            row.add(enroll.getName());
+
+            row.add(enroll.getSex()==1?"男":"女");
+            row.add(enroll.getPhone());
+            row.add(enroll.getQq());
+            row.add(enroll.getSchool());
+            row.add(enroll.getRemarks());
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            row.add(simpleDateFormat.format(enroll.getCreatetime()));
+
+            rows.add(row);
+
+        }
+
+        data.setRows(rows);
+
+        try{
+
+            ExcelUtils.exportExcel(response,"报名表单",data);
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+
+        }
 
     }
 

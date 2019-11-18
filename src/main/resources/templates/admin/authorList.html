@@ -293,17 +293,8 @@
                 this.allId = []
             },
             daochu(){
-                postPromise({},'enroll/dc').then(res => {
-                    if(res.flag == 0) {
-                    this.$message({
-                        message: '导出成功，请在桌面查看',
-                        type: 'success'
-                    });
 
-                }
-            } ,err => {
-                    console.log(err)
-                })
+                window.location.href = 'enroll/dc';
 
             },
 
