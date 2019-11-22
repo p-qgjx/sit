@@ -36,6 +36,10 @@
             overflow:hidden;
             text-overflow:ellipsis;
         }
+        .sx{
+            width: 25px;
+
+        }
     </style>
   </head>
   <body id="reportsPage">
@@ -137,12 +141,12 @@
                     <ul class="tableT">
                         <li style="width: 5%"></li>
                         <li style="width: 5%">序号</li>
-                        <li style="width: 32%">企业名称</li>
+                        <li style="width: 28%">企业名称</li>
                         <li style="width: 10%">城市</li>
                         <li style="width: 11%">类型</li>
                         <li style="width: 15%">工资</li>
                         <li style="width: 10%">发布时间</li>
-                        <li style="width: 12%">操作</li>
+                        <li style="width: 16%">操作</li>
                     </ul>
                     <div class="" v-if="newList != ''">
                         <ul class="tableC" v-for="(item,index) in newList">
@@ -150,7 +154,7 @@
                                 <input type="checkbox" name="" @change="changeBox(item,index)">
                             </li>
                             <li style="width: 5%">{{index + 1}}</li>
-                            <li style="width: 32%">{{item.name}}</li>
+                            <li style="width: 28%">{{item.name}}</li>
                             <li style="width: 10%">{{item.cityname.cityname}}</li>
                             <li style="width: 11%">
                                 {{item.type == 1 ? '寒假工' : item.type == 2 ?'单招生':item.type == 3 ?'暑假工':'每日兼职'}}
@@ -158,13 +162,15 @@
                             <li style="width: 15%">{{item.wages}}</li>
                             <li style="width: 10%">{{item.createtime.substr(0,10)}}</li>
 
-                            <li style="width: 12%" class="lastLi">
+                            <li style="width: 16%" class="lastLi">
                                 <!--<span v-if="index == 0"></span>
                                 <span v-else-if="index == 1"></span> 
                                 <span v-else-if="index == 2"></span> 
                                 <span v-else @click="top(item)">顶置</span>-->
                                 <span @click="details(item)">编辑</span> 
                                 <span @click="delArticle('1',item)">删除</span>
+                                <span @click="upper(item.id)"><img class="sx" src="../../static/img/up.png"></span>
+                                <span @click="down(item.id)"><img class="sx" src="../../static/img/down.png"></span>
                             </li>
                         </ul>
                     </div>
@@ -220,6 +226,41 @@ let home = new Vue({
         details(item) { //详情页面
             window.location.href = '/editNews?id='+item.id;
         },
+
+        upper(id){
+            postPromise({id: id},'work/upper').then(res => {
+                if(res.flag == 0) {
+                    this.getNewList(this.pageNum,this.pageSize);
+                }
+                if(res.flag == 2) {
+                    this.$message({
+                        message: '已是首条',
+                        type: 'success'
+                    });
+                }
+            } ,err => {
+                console.log(err)
+            })
+
+        },
+
+        down(id){
+            postPromise({id: id},'work/down').then(res => {
+                if(res.flag == 0) {
+                    this.getNewList(this.pageNum,this.pageSize);
+                }
+            if(res.flag == 2) {
+                this.$message({
+                    message: '已是尾条',
+                    type: 'success'
+                });
+            }
+        } ,err => {
+                console.log(err)
+            })
+
+        },
+
         
         
         getNewList(pageNum, pageSize,name) { //获取新闻列表
@@ -241,6 +282,7 @@ let home = new Vue({
             })
         },
         currenPage(e) { //切换分页
+            this.pageNum=e
             this.getNewList(e,this.pageSize)
         },
 

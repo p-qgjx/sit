@@ -4,6 +4,7 @@ import com.nkp.pojo.Work;
 import com.nkp.pojo.WorkWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 import java.util.List;
@@ -72,4 +73,17 @@ public interface WorkMapper {
     //查询所有企业的名称
     @Select("select * from work")
     List<Work> selName();
+
+    @Select("select IFNULL(MAX(rank),0)  FROM work")
+    Integer Smax();
+
+    @Select("SELECT id,rank FROM work WHERE rank>#{rank} ORDER BY rank ASC LIMIT 1")
+    WorkWithBLOBs selUp(Integer rank);
+
+    @Select("SELECT id,rank FROM work WHERE rank<#{rank} ORDER BY rank desc LIMIT 1")
+    WorkWithBLOBs selDown(Integer rank);
+
+    //置换权重
+    @Update("update work set rank=#{rank} where id=#{id}")
+    int substitution(int id,Integer rank);
 }
