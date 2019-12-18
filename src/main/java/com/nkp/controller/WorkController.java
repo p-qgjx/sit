@@ -8,6 +8,7 @@ import com.nkp.dao.EnrollMapper;
 import com.nkp.dao.WorkMapper;
 import com.nkp.pojo.Activity;
 import com.nkp.pojo.UserInfo;
+import com.nkp.pojo.Work;
 import com.nkp.pojo.WorkWithBLOBs;
 import com.nkp.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class WorkController {
     @RequestMapping("/add")
     public DataPackJSON add(HttpServletRequest request, WorkWithBLOBs workWithBLOBs) throws ParseException {
         workWithBLOBs.setCreatetime(NewDateTime.getDateTime("yyyy-MM-dd :HH:mm:ss"));
+        Integer rank=workMapper.Smax();
+        workWithBLOBs.setRank(rank+1);
+
         int res=workMapper.insertSelective(workWithBLOBs);
         DataPackJSON dataPackJSON=new DataPackJSON();
         if(res==1){
@@ -111,6 +115,61 @@ public class WorkController {
         dataPackJSON.setMsg("SUCCESS");
         return dataPackJSON;
 
+    }
+    //上移
+    @RequestMapping("/upper")
+    public DataPackJSON upper(Integer id,HttpServletRequest request){
+        DataPackJSON dataPackJSON=new DataPackJSON();
+        WorkWithBLOBs workWithBLOBs=workMapper.selectByPrimaryKey(id);
+        Integer rank=workWithBLOBs.getRank();
+
+        WorkWithBLOBs workWithBLOBs1=workMapper.selUp(rank);
+        if(workWithBLOBs1==null){
+            dataPackJSON.setFlag(2);
+            dataPackJSON.setMsg("已是首条");
+            return dataPackJSON;
+        }
+        Integer rank1=workWithBLOBs1.getRank();
+
+        workMapper.substitution(id,rank1);
+        workMapper.substitution(workWithBLOBs1.getId(),rank);
+        dataPackJSON.setFlag(0);
+        dataPackJSON.setMsg("SUCCESS");
+        return dataPackJSON;
+    }
+
+    @RequestMapping("/down")
+    public DataPackJSON down(Integer id,HttpServletRequest request){
+        DataPackJSON dataPackJSON=new DataPackJSON();
+        WorkWithBLOBs workWithBLOBs=workMapper.selectByPrimaryKey(id);
+        Integer rank=workWithBLOBs.getRank();
+
+        WorkWithBLOBs workWithBLOBs1=workMapper.selDown(rank);
+        if(workWithBLOBs1==null){
+            dataPackJSON.setFlag(2);
+            dataPackJSON.setMsg("已是尾条");
+            return dataPackJSON;
+        }
+        Integer rank1=workWithBLOBs1.getRank();
+
+        workMapper.substitution(id,rank1);
+        workMapper.substitution(workWithBLOBs1.getId(),rank);
+        dataPackJSON.setFlag(0);
+        dataPackJSON.setMsg("SUCCESS");
+        return dataPackJSON;
+    }
+
+    @RequestMapping("/selAll")
+    public DataPackJSON selAll(HttpServletRequest request){
+
+        DataPackJSON dataPackJSON=new DataPackJSON();
+        Map map=new HashMap();
+        List<Work> Work=workMapper.selName();
+        map.put("Work",Work);
+        dataPackJSON.setMap(map);
+        dataPackJSON.setFlag(0);
+        dataPackJSON.setMsg("SUCCESS");
+        return dataPackJSON;
     }
 
 
