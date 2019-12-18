@@ -33,6 +33,10 @@
             <label style="width: 20%;padding:1.5%" for="woman">女</label>
         </div>
         <div class="input-group">
+            <label for="myschool">所选公司</label>
+            <select name="remarks" id="remarks"></select>
+        </div>
+        <div class="input-group">
             <label for="mycall">手机号码</label>
             <input type="text" id="mycall"  placeholder="请输入您的手机号码">
         </div>
@@ -62,7 +66,8 @@
     <script>
         $(function () {
             let baseUrl = ''
-
+            let id = getUrlParam('id')
+            getAllRemarks(id)
             $('#man').on('click', function () {
                 $(this).prop('checked', true)
                 $('#woman').prop('checked', false)
@@ -102,7 +107,7 @@
                         qq: $('#myqq').val(),
                         school: $('#myschool').val(),
                         sex: $('#man').prop('checked') ? 1 : 2,
-                        remarks: ''
+                        remarks: $('#remarks').val()
                     },
                     success: function(res) {
                         console.log(res)
@@ -113,6 +118,34 @@
                 })
             }
         })
+
+        // 获取地址栏参数
+        function getUrlParam(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r!=null) return unescape(r[2]); return null; //返回参数值
+        }
+
+        // 获取所有的公司
+        function getAllRemarks(id) {
+            $.ajax({
+                url: baseUrl + '',
+                methods: 'GET',
+                success: function (res) {
+                    var str = ''
+                    for (var i = 0; i < res.data.length; i++) {
+                        var item = res.data[i]
+                        if (item.id == id) {
+                            str += '<option value="' + item.id + ' selected">' + item.name + '</option>'
+                        } else {
+                            str += '<option value="' + item.id + '">' + item.name + '</option>'
+                        }
+                        $('#remarks').html(str)
+                    }
+
+                }
+            })
+        }
         
     </script>
 </body>

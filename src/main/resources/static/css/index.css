@@ -257,7 +257,8 @@ input,button{font:normal 14px "Microsoft Yahei";margin:0;padding:0}
 .odform{padding:5%}
 .input-group{margin-bottom:5%;position:relative}
 .input-group label{padding:2% 0;position:absolute;color:#595757}
-.input-group input{margin-left:5em;padding:3% 5%;box-sizing:border-box;background:#efeff0;border:0;border-radius:5px;color:#595757;width:75%}
+.input-group input, .input-group select {margin-left:5em;padding:3% 5%;box-sizing:border-box;background:#efeff0;border:0;border-radius:5px;color:#595757;width:75%}
+.input-group select { margin-left: 5.2em;}
 .odform button{background:#ec5b46;color:#fff;text-align:center;border:0;border-radius:10px;padding:3%;width:100%;font-size:16px}
 .odform .cal{background-image:url(../images/daetixian-cal.png);background-repeat:no-repeat;background-position:95% center;background-size:auto 50%}
 .odform .xl{background-image:url(../images/daetixian-xl.png);background-repeat:no-repeat;background-position:95% center;background-size:auto 20%}

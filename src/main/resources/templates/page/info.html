@@ -25,7 +25,7 @@
           <div class="ent_title"> <span class="name"></span></div>
           <div class="ent_price"> <span class="price"></span>元</div>
         </div>
-        <div class="float_right ent_employ" style="width:38%;overflow:hidden"> <a href="/sign" id="submit_employ">免&nbsp;费&nbsp;报&nbsp;名</a> </div>
+        <div class="float_right ent_employ" style="width:38%;overflow:hidden"> <a class="sign-btn" href="/sign" id="submit_employ">免&nbsp;费&nbsp;报&nbsp;名</a> </div>
     </div>
     <div id="ctl00_ContentPlaceHolder1_ent_tags" class="ent_tags clearfix"></div>
     <div class="ent_butie" id="ent_more_price">
@@ -61,7 +61,7 @@
               <div class="jobxq_con about"></div>
             </section>
         </div>
-        <div class="ent_employ sign" style="width:38%;overflow:hidden"> <a href="/sign">免&nbsp;费&nbsp;报&nbsp;名</a> </div>
+        <div class="ent_employ sign" style="width:38%;overflow:hidden"> <a class="sign-btn" href="/sign">免&nbsp;费&nbsp;报&nbsp;名</a> </div>
     </article>
     <!-- footer -->
     <div class="footet-wrapper">
@@ -80,6 +80,7 @@
             let id = getUrlParam('id')
             console.log(id)
             getDetail(id)
+            $('.sign-btn').attr('href', './sign.html?id=' + id)
         })
         let baseUrl = ''
         
