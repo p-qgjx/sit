@@ -137,11 +137,12 @@
                 <ul class="tableT">
                     <li style="width: 5%"></li>
                     <li style="width: 5%">序号</li>
-                    <li style="width: 15%">姓名</li>
+                    <li style="width: 10%">姓名</li>
                     <li style="width: 8%">性别</li>
                     <li style="width: 10%">手机号码</li>
-                    <li style="width: 11%">QQ</li>
-                    <li style="width: 24%">学校</li>
+                    <li style="width: 10%">QQ</li>
+                    <li style="width: 18%">学校</li>
+                    <li style="width: 12%">意向企业</li>
                     <li style="width: 10%">发布时间</li>
                     <li style="width: 12%">操作</li>
                 </ul>
@@ -151,12 +152,13 @@
                             <input type="checkbox" name="" @change="changeBox(item,index)">
                         </li>
                         <li style="width: 5%">{{index + 1}}</li>
-                        <li style="width: 15%">{{item.name}}</li>
+                        <li style="width: 10%">{{item.name}}</li>
                         <li style="width: 8%">{{item.sex == 1? '男': '女'}}</li>
                         <li style="width: 10%">{{item.phone}}</li>
-                        <li style="width: 11%">{{item.qq}}</li>
+                        <li style="width: 10%">{{item.qq}}</li>
 
-                        <li style="width: 24%">{{item.school}}</li>
+                        <li style="width: 18%">{{item.school}}</li>
+                        <li style="width: 12%">{{item.work.name}}</li>
                         <li style="width: 10%">{{item.createtime.substr(0,10)}}</li>
 
                         <li style="width: 12%" class="lastLi">

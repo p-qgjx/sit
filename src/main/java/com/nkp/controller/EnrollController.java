@@ -132,7 +132,7 @@ public class EnrollController {
 
         int rowIndex = 0;
 
-        List<Enroll> list = enrollMapper.selAll();
+        List<Enroll> list = enrollMapper.selAll2();
 
         ExcelData data = new ExcelData();
 
@@ -148,7 +148,7 @@ public class EnrollController {
         titles.add("手机号码");
         titles.add("QQ");
         titles.add("学校");
-        titles.add("报名备注");
+        titles.add("意向企业");
         titles.add("报名时间");
 
         data.setTitles(titles);
@@ -171,7 +171,7 @@ public class EnrollController {
             row.add(enroll.getPhone());
             row.add(enroll.getQq());
             row.add(enroll.getSchool());
-            row.add(enroll.getRemarks());
+            row.add(enroll.getWork().getName());
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             row.add(simpleDateFormat.format(enroll.getCreatetime()));
 

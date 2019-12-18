@@ -129,20 +129,21 @@
         // 获取所有的公司
         function getAllRemarks(id) {
             $.ajax({
-                url: baseUrl + '/enroll/selName',
+                url: '/enroll/selName',
                 methods: 'GET',
                 success: function (res) {
                     var str = ''
                     for (var i = 0; i < res.map.list.length; i++) {
                         var item = res.map.list[i]
                         if (item.id == id) {
-                            str += '<option value="' + item.id + ' selected">' + item.name + '</option>'
+                            str += '<option value="' + item.id + '" selected>' + item.name + '</option>'
                         } else {
                             str += '<option value="' + item.id + '">' + item.name + '</option>'
                         }
-                        $('#remarks').html(str)
                     }
+                    console.log(str)
 
+                    $('#remarks').html(str)
                 }
             })
         }

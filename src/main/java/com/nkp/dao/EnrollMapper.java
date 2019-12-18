@@ -60,4 +60,6 @@ public interface EnrollMapper {
 
     @Select("select * from enroll")
     List<Enroll> selAll();
+
+    List<Enroll> selAll2();
 }
