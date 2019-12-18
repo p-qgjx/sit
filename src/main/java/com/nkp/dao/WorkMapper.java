@@ -86,4 +86,6 @@ public interface WorkMapper {
     //置换权重
     @Update("update work set rank=#{rank} where id=#{id}")
     int substitution(int id,Integer rank);
+
+
 }

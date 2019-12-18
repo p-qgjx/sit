@@ -8,6 +8,7 @@ import com.nkp.dao.EnrollMapper;
 import com.nkp.dao.WorkMapper;
 import com.nkp.pojo.Activity;
 import com.nkp.pojo.UserInfo;
+import com.nkp.pojo.Work;
 import com.nkp.pojo.WorkWithBLOBs;
 import com.nkp.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,6 +154,19 @@ public class WorkController {
 
         workMapper.substitution(id,rank1);
         workMapper.substitution(workWithBLOBs1.getId(),rank);
+        dataPackJSON.setFlag(0);
+        dataPackJSON.setMsg("SUCCESS");
+        return dataPackJSON;
+    }
+
+    @RequestMapping("/selAll")
+    public DataPackJSON selAll(HttpServletRequest request){
+
+        DataPackJSON dataPackJSON=new DataPackJSON();
+        Map map=new HashMap();
+        List<Work> Work=workMapper.selName();
+        map.put("Work",Work);
+        dataPackJSON.setMap(map);
         dataPackJSON.setFlag(0);
         dataPackJSON.setMsg("SUCCESS");
         return dataPackJSON;

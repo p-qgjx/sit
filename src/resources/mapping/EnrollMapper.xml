@@ -159,7 +159,7 @@
   </update>
 
   <select id="selLike" resultMap="BaseResultMap">
-  select * from enroll where 1=1
+  select * from enroll inner join work on enroll.remarks=work.id where 1=1
   <if test="name != null and name.trim() !=''">
     and name like "%${name}%"
   </if>
